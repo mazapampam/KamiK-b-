@@ -1,0 +1,27 @@
+/* ===== Punto de venta: acciones bajo el campo de código ===== */
+
+/* ===== Tabla de artículos ===== */
+.miniatura-producto { width: 44px; height: 60px; object-fit: cover; border-radius: 4px; background: var(--color-rosa-claro); }
+
+/* ===== Panel lateral: detalle de la venta ===== */
+.linea-venta { background: var(--color-rosa-claro); border-radius: 6px; padding: 12px; margin: 12px 0 16px; }
+.linea-venta-cabecera { display: flex; justify-content: space-between; }
+.control-cantidad { display: flex; align-items: center; gap: 16px; margin: 8px 0; }
+.boton-cantidad { width: 40px; padding: 6px 0; }
+.cantidad-actual { min-width: 24px; text-align: center; }
+.mensaje-vacio { margin: 16px 0 48px; }
+.total-venta { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--color-borde); padding-top: 14px; margin: 16px 0; font-size: 18px; font-weight: 500; }
+.total-venta-importe { color: var(--color-principal); font-size: 22px; }
+.panel-lateral .boton-ancho { margin-bottom: 12px; }
+
+/* ===== Modal Confirmar pago y vistas de venta confirmada ===== */
+.resumen-pago { margin: 16px 0; }
+.resumen-venta { max-width: 480px; margin: 16px 0 24px; }
+
+/* ===== Probar validaciones y ventanas de error ===== */
+.panel-validaciones { margin-top: 32px; padding: 16px 18px; }
+.panel-validaciones .panel-titulo { font-size: 18px; }
+.grupo-validaciones { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 12px 0; }
+.titulo-error { color: var(--color-alerta-texto); }
+.texto-modal { margin: 12px 0; }
+a.cantidad-actual { color: var(--color-texto); }

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Compras · KamiKōbō</title>
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/componentes.css">
+  <link rel="stylesheet" href="../css/interacciones.css">
+  <link rel="stylesheet" href="../css/paginas/compras.css">
+</head>
+<!-- Cambiar a data-rol="operador" para probar el rol Operador -->
+<body data-rol="admin">
+
+  <!-- ENCABEZADO (idéntico en todas las páginas; luego puede extraerse a un componente) -->
+  <header class="encabezado encabezado-simple">
+    <div class="contenedor">
+      <a class="boton-menu" href="#menu" aria-label="Abrir menú">☰</a>
+      <a class="logo" href="dashboard.html">KamiKōbō</a>
+      <div class="zona-usuario">
+        <a class="icono-usuario" href="#menu-usuario" aria-label="Menú de usuario">👤</a>
+        <nav class="menu-usuario oculto" id="menu-usuario">
+          <a href="perfil.html">Ver perfil</a>
+          <a class="enlace-peligro" href="login.html">Cerrar sesión</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- MENÚ LATERAL (se abre con :target; cierra con href="#cerrar") -->
+  <div class="fondo-oscuro oculto" id="menu">
+    <nav class="menu-lateral">
+      <div class="menu-cabecera"><strong>NAVEGACIÓN</strong><a class="modal-cerrar" href="#cerrar" aria-label="Cerrar menú">✕</a></div>
+      <a href="ventas.html">Punto de venta</a>
+      <a href="inventario.html">Inventario</a>
+      <a href="compras.html" data-rol="admin">Compras</a>
+      <a href="devoluciones.html">Devoluciones</a>
+      <a href="historial.html" data-rol="admin">Historial y Consultas</a>
+      <a href="reportes.html" data-rol="admin">Reportes</a>
+      <a href="usuarios.html" data-rol="admin">Usuarios y Roles</a>
+      <a href="cierre-caja.html" data-rol="admin">Cierre de caja</a>
+      <hr class="menu-separador">
+      <p class="texto-ayuda">Panel de administración</p>
+    </nav>
+  </div>
+
+  <main class="contenedor contenido">
+    <p class="ruta-navegacion">KamiKōbō / COMPRAS</p>
+    <div class="encabezado-pagina">
+      <div>
+        <h1 class="titulo-pagina">Registrar compra</h1>
+        <p class="subtitulo-pagina">Registra entradas de mercancía y actualiza tu inventario al confirmar.</p>
+      </div>
+      
+    </div>
+
+    <div class="rejilla-formulario-cuatro">
+      <div class="campo"><label class="etiqueta" for="folio-nueva">Folio de compra</label><input class="entrada" type="text" id="folio-nueva" value="CMP-2026-0148" readonly></div>
+      <div class="campo"><label class="etiqueta" for="fecha-nueva">Fecha</label><input class="entrada" type="text" id="fecha-nueva" value="2026-11-23"></div>
+      <div class="campo"><label class="etiqueta" for="proveedor-nueva">Proveedor *</label><select class="selector" id="proveedor-nueva"><option>Distribuidora Sakura</option><option>Selecciona un proveedor</option></select></div>
+      <div class="campo"><label class="etiqueta" for="responsable-nueva">Responsable</label><input class="entrada" type="text" id="responsable-nueva" value="Ana López" readonly></div>
+    </div>
+    <div class="rejilla-con-panel">
+      <section>
+        <div class="caja-rosa barra-agregar">
+          <div class="campo">
+            <label class="etiqueta" for="buscar-nueva">Agregar productos por código o nombre</label>
+            <input class="entrada" type="search" id="buscar-nueva" placeholder="Escanea o busca un producto del catálogo">
+          </div>
+          <button class="boton" type="button">Agregar</button>
+        </div>
+        <h2 class="seccion-titulo">Detalle de la compra</h2>
+        <p class="texto-ayuda">3 productos · 26 unidades por recibir</p>
+        <!-- BACKEND: líneas de la compra (data-id = ID interno) -->
+      <div class="tabla-contenedor">
+        <table class="tabla">
+          <thead><tr><th>ID interno</th><th>Producto</th><th>Cantidad</th><th>Costo unit.</th><th>Importe</th></tr></thead>
+          <tbody>
+          <tr data-id="FIG-001"><td>FIG-001</td><td>Sakura · primavera</td><td>12</td><td>$620.00</td><td>$7,440.00</td></tr>
+          <tr class="fila-alterna" data-id="FIG-002"><td>FIG-002</td><td>Kanade</td><td>8</td><td>$480.00</td><td>$3,840.00</td></tr>
+          <tr data-id="FIG-003"><td>FIG-003</td><td>Hatsune Miku</td><td>6</td><td>$850.00</td><td>$5,100.00</td></tr>
+          </tbody>
+        </table>
+      </div>
+        <p class="texto-ayuda nota-compra">Cantidades enteras &gt; 0 y costos &gt; $0.00. Solo productos registrados.</p>
+        <button class="boton-secundario" type="button">Añadir otra línea</button>
+        <p class="texto-ayuda nota-compra">Borrador · Sin entradas de inventario hasta confirmar.</p>
+        <a class="boton-secundario" href="dashboard.html">Volver al inicio</a>
+      </section>
+      <aside class="panel-lateral">
+          <h2 class="panel-titulo">Resumen de compra</h2>
+          <div class="linea-dato linea-resumen"><span class="texto-ayuda">Productos</span><strong>3</strong></div>
+          <div class="linea-dato linea-resumen"><span class="texto-ayuda">Unidades</span><strong>26</strong></div>
+          <div class="linea-dato linea-resumen linea-separada"><span class="texto-ayuda">Subtotal</span><strong>$16,380.00</strong></div>
+          <div class="linea-dato linea-resumen"><span class="texto-ayuda">Impuestos</span><span>$0.00</span></div>
+          <div class="total-compra"><span>Total</span><span class="total-compra-importe">$16,380.00</span></div>
+          <div class="alerta alerta-exito">Al confirmar, se sumarán 26 unidades al inventario.</div>
+          <!-- Estado de error: el JS quita .oculto, cambia el botón a "Corregir datos" y muestra "Pendiente" en subtotal y total -->
+          <div class="alerta alerta-error oculto">No se puede confirmar. Proveedor obligatorio, cantidad entera &gt; 0 y costo &gt; $0.00.</div>
+          <a class="boton boton-ancho" href="#compra-confirmada">Confirmar compra</a>
+          <a class="boton-secundario boton-ancho" href="#cerrar">Cancelar</a>
+      </aside>
+    </div>
+
+    <!-- ===== VISTA: Compra confirmada ===== -->
+    <section class="vista oculto" id="compra-confirmada" aria-label="Compra confirmada">
+      <div class="contenedor contenido">
+        <p class="ruta-navegacion">KamiKōbō / COMPRAS</p>
+        <h1 class="titulo-pagina">Compra confirmada</h1>
+        <p class="subtitulo-pagina" data-folio="CMP-2026-0148">CMP-2026-0148 · 2026-11-23 · Responsable: Ana López</p>
+    <div class="rejilla-formulario-cuatro">
+      <div class="campo"><label class="etiqueta" for="folio-conf">Folio de compra</label><input class="entrada" type="text" id="folio-conf" value="CMP-2026-0148" readonly></div>
+      <div class="campo"><label class="etiqueta" for="fecha-conf">Fecha</label><input class="entrada" type="text" id="fecha-conf" value="2026-11-23"></div>
+      <div class="campo"><label class="etiqueta" for="proveedor-conf">Proveedor *</label><select class="selector" id="proveedor-conf"><option>Distribuidora Sakura</option><option>Selecciona un proveedor</option></select></div>
+      <div class="campo"><label class="etiqueta" for="responsable-conf">Responsable</label><input class="entrada" type="text" id="responsable-conf" value="Ana López" readonly></div>
+    </div>
+    <div class="rejilla-con-panel">
+      <section>
+        <div class="caja-rosa barra-agregar">
+          <div class="campo">
+            <label class="etiqueta" for="buscar-conf">Agregar productos por código o nombre</label>
+            <input class="entrada" type="search" id="buscar-conf" placeholder="Escanea o busca un producto del catálogo">
+          </div>
+          <button class="boton" type="button">Agregar</button>
+        </div>
+        <h2 class="seccion-titulo">Detalle de la compra</h2>
+        <p class="texto-ayuda">3 productos · 26 unidades por recibir</p>
+        <!-- BACKEND: líneas de la compra (data-id = ID interno) -->
+      <div class="tabla-contenedor">
+        <table class="tabla">
+          <thead><tr><th>ID interno</th><th>Producto</th><th>Cantidad</th><th>Costo unit.</th><th>Importe</th></tr></thead>
+          <tbody>
+          <tr data-id="FIG-001"><td>FIG-001</td><td>Sakura · primavera</td><td>12</td><td>$620.00</td><td>$7,440.00</td></tr>
+          <tr class="fila-alterna" data-id="FIG-002"><td>FIG-002</td><td>Kanade</td><td>8</td><td>$480.00</td><td>$3,840.00</td></tr>
+          <tr data-id="FIG-003"><td>FIG-003</td><td>Hatsune Miku</td><td>6</td><td>$850.00</td><td>$5,100.00</td></tr>
+          </tbody>
+        </table>
+      </div>
+        <p class="texto-ayuda nota-compra">Cantidades enteras &gt; 0 y costos &gt; $0.00. Solo productos registrados.</p>
+        <button class="boton-secundario" type="button">Añadir otra línea</button>
+        <p class="texto-ayuda nota-compra">Entrada registrada una sola vez · 26 unidades recibidas del proveedor.</p>
+      
+      <footer class="pie-pagina">
+        <div class="contenedor">
+          <p class="logo">KamiKōbō</p>
+          <p>Panel de administración</p>
+          <p>Catálogo · Compras · Ventas · Devoluciones</p>
+          <div class="pie-sesion">
+            <span>Sesión: Ana López / Administrador</span>
+            <span>Sistema de gestión comercial</span>
+          </div>
+        </div>
+      </footer>
+    </section>
+      <aside class="panel-lateral">
+          <h2 class="panel-titulo">Resumen de compra</h2>
+          <div class="linea-dato linea-resumen"><span class="texto-ayuda">Productos</span><strong>3</strong></div>
+          <div class="linea-dato linea-resumen"><span class="texto-ayuda">Unidades</span><strong>26</strong></div>
+          <div class="linea-dato linea-resumen linea-separada"><span class="texto-ayuda">Subtotal</span><strong>$16,380.00</strong></div>
+          <div class="linea-dato linea-resumen"><span class="texto-ayuda">Impuestos</span><span>$0.00</span></div>
+          <div class="total-compra"><span>Total</span><span class="total-compra-importe">$16,380.00</span></div>
+          <div class="alerta alerta-exito">Confirmada: +26 unidades. Sakura: 12 + 12 = 24 unidades.</div>
+          <a class="boton boton-ancho" href="compras.html">Nueva compra</a>
+          <a class="boton-secundario boton-ancho" href="dashboard.html">Volver al inicio</a>
+      </aside>
+    </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- PIE DE PÁGINA (idéntico en todas las páginas) -->
+  <footer class="pie-pagina">
+    <div class="contenedor">
+      <p class="logo">KamiKōbō</p>
+      <p>Panel de administración</p>
+      <p>Catálogo · Compras · Ventas · Devoluciones</p>
+      <div class="pie-sesion">
+        <span>Sesión: Ana López / Administrador</span>
+        <span>Sistema de gestión comercial</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js" defer></script>
+  <script src="../js/compras/compras.js" defer></script>
+  <script src="../js/compras/comprasSQL.js" defer></script>
+</body>
+</html>

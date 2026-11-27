@@ -1,0 +1,112 @@
+/* ============================================================
+   Microinteracciones (solo hover / foco / pulsación)
+   Cambios visuales ligeros: no modifican estructura ni lógica.
+   ============================================================ */
+
+/* --- Transiciones suaves en lo que se puede interactuar --- */
+a, button, .entrada, .selector, .area-texto, .buscador,
+.tarjeta, .indicador, .tarjeta-producto, .producto-imagen,
+.chip, .pestana, .opcion, .pagina-enlace, .caja-archivo, .tarjeta-fondo,
+.modal-cerrar {
+  transition: background-color .18s ease, border-color .18s ease,
+              color .18s ease, box-shadow .18s ease,
+              transform .18s ease, opacity .18s ease;
+}
+
+/* --- Encabezado --- */
+.boton-menu:hover, .icono-usuario:hover {
+  background: rgba(255, 255, 255, .18);
+  border-radius: 6px;
+}
+.boton-menu:active, .icono-usuario:active { transform: scale(.94); }
+.encabezado .logo:hover, .pie-pagina .logo:hover { opacity: .8; }
+.buscador:hover:not(:focus) { border-color: rgba(255, 255, 255, .6); }
+.buscador:focus { outline: 2px solid #FFFFFF; outline-offset: 1px; }
+
+/* --- Menú lateral y menú de usuario --- */
+.menu-lateral a:hover, .menu-usuario a:hover {
+  background: var(--color-rosa-claro);
+  color: var(--color-principal);
+  transform: translateX(3px);
+}
+.menu-lateral a:active, .menu-usuario a:active { background: #FFE0E6; }
+.menu-lateral a.enlace-peligro:hover,
+.menu-usuario a.enlace-peligro:hover {
+  background: var(--color-rosa-claro);
+  color: var(--color-principal-oscuro);
+}
+.modal-cerrar:hover { transform: rotate(90deg); color: var(--color-principal-oscuro); }
+
+/* --- Botones: realce al pasar y hundimiento al pulsar --- */
+.boton:hover, .boton-secundario:hover, .boton-peligro:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, .12);
+}
+.boton-peligro:hover { background: var(--color-principal-oscuro); }
+.boton:active, .boton-secundario:active, .boton-peligro:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+.boton-enlace:hover {
+  color: var(--color-principal-oscuro);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.boton.deshabilitado:hover { transform: none; box-shadow: none; }
+
+/* --- Tarjetas del inicio e indicadores (KPI) --- */
+.tarjeta-modulo:hover, .tarjeta-ancha:hover, .indicador:hover {
+  transform: translateY(-3px);
+  border-color: #D9D9D9;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, .10);
+}
+.tarjeta-modulo:hover .tarjeta-fondo,
+.tarjeta-ancha:hover .tarjeta-fondo {
+  opacity: .5;
+  transform: scale(1.03);
+}
+
+/* --- Tarjetas de producto (inventario) --- */
+.tarjeta-producto:hover {
+  transform: translateY(-3px);
+  border-color: #D9D9D9;
+}
+.tarjeta-producto:hover .producto-imagen { transform: scale(1.04); }
+
+/* --- Tablas: fila resaltada y enlace subrayado --- */
+.tabla tbody tr:not(.fila-total):hover { background: #FFF6F8; }
+.tabla .enlace-fila:hover { text-decoration: underline; text-underline-offset: 2px; }
+
+/* --- Filtros, chips, pestañas y paginación --- */
+.chip:hover, .pagina-enlace:hover:not(.activo) {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, .08);
+}
+.pestana:hover:not(.activo), .opcion:hover:not(.activo) {
+  background: #FFE0E6;
+  color: var(--color-principal);
+}
+.pagina-enlace:hover:not(.activo) {
+  border-color: var(--color-principal);
+  color: var(--color-principal);
+}
+.caja-archivo:hover { border-color: var(--color-principal); }
+
+/* --- Formularios --- */
+.entrada:hover:not(:focus), .selector:hover:not(:focus),
+.area-texto:hover:not(:focus) { border-color: #C9BEC1; }
+
+/* --- Foco visible con teclado --- */
+a:focus-visible, button:focus-visible {
+  outline: 2px solid var(--color-principal);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* --- Respeta la preferencia de "menos movimiento" --- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition-duration: .01ms !important;
+    animation-duration: .01ms !important;
+  }
+}

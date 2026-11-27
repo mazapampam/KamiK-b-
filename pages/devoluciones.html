@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Devoluciones · KamiKōbō</title>
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/componentes.css">
+  <link rel="stylesheet" href="../css/interacciones.css">
+  <link rel="stylesheet" href="../css/paginas/devoluciones.css">
+</head>
+<!-- Cambiar a data-rol="operador" para probar el rol Operador -->
+<body data-rol="admin">
+
+  <!-- ENCABEZADO (idéntico en todas las páginas; luego puede extraerse a un componente) -->
+  <header class="encabezado encabezado-simple">
+    <div class="contenedor">
+      <a class="boton-menu" href="#menu" aria-label="Abrir menú">☰</a>
+      <a class="logo" href="dashboard.html">KamiKōbō</a>
+      <div class="zona-usuario">
+        <a class="icono-usuario" href="#menu-usuario" aria-label="Menú de usuario">👤</a>
+        <nav class="menu-usuario oculto" id="menu-usuario">
+          <a href="perfil.html">Ver perfil</a>
+          <a class="enlace-peligro" href="login.html">Cerrar sesión</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- MENÚ LATERAL (se abre con :target; cierra con href="#cerrar") -->
+  <div class="fondo-oscuro oculto" id="menu">
+    <nav class="menu-lateral">
+      <div class="menu-cabecera"><strong>NAVEGACIÓN</strong><a class="modal-cerrar" href="#cerrar" aria-label="Cerrar menú">✕</a></div>
+      <a href="ventas.html">Punto de venta</a>
+      <a href="inventario.html">Inventario</a>
+      <a href="compras.html" data-rol="admin">Compras</a>
+      <a href="devoluciones.html">Devoluciones</a>
+      <a href="historial.html" data-rol="admin">Historial y Consultas</a>
+      <a href="reportes.html" data-rol="admin">Reportes</a>
+      <a href="usuarios.html" data-rol="admin">Usuarios y Roles</a>
+      <a href="cierre-caja.html" data-rol="admin">Cierre de caja</a>
+      <hr class="menu-separador">
+      <p class="texto-ayuda">Panel de administración</p>
+    </nav>
+  </div>
+
+  <main class="contenedor contenido">
+    <p class="ruta-navegacion">KamiKōbō / DEVOLUCIONES</p>
+    <div class="encabezado-pagina">
+      <div>
+        <h1 class="titulo-pagina">Devoluciones</h1>
+        <p class="subtitulo-pagina">Relaciona la devolución con una venta y valida las unidades vendidas.</p>
+      </div>
+      
+    </div>
+
+    <div class="rejilla-con-panel">
+      <section>
+        <div class="caja-rosa">
+          <label class="etiqueta" for="folio-venta">Folio de venta original *</label>
+          <input class="entrada" type="text" id="folio-venta" name="folio_venta" value="V-000128">
+        </div>
+
+        <h2 class="seccion-titulo">Artículos de la venta</h2>
+        <!-- BACKEND: datos de la venta consultada por folio -->
+        <p class="texto-ayuda" data-folio="V-000128">Venta V-000128 · 2026-11-23 · Ana López</p>
+        <div class="tabla-contenedor">
+          <table class="tabla">
+            <thead><tr><th>Producto · Vendidas</th><th>Devueltas</th><th>Disponibles</th></tr></thead>
+            <tbody>
+              <tr class="fila-seleccionada" data-id="FIG-001">
+                <td class="producto-nombre">Sakura · primavera · 1</td>
+                <td class="texto-peligro">0</td>
+                <td><strong>1</strong></td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="texto-ayuda nota-tabla">Máximo = vendidas (1) − devueltas previamente (0) = 1</p>
+        </div>
+        <p class="texto-ayuda">Código de barras: 7501234567893</p>
+        <p class="texto-ayuda">Aún no modifica inventario. Solo se restaura al confirmar.</p>
+
+        <!-- Un solo aviso reutilizable: el JS cambia el texto y quita .oculto.
+             Casos: la venta no existe, cantidad excesiva, devolución incompleta. -->
+        <div class="alerta alerta-error oculto" role="alert">
+          <p class="alerta-titulo">Título del error</p>
+          <p>Mensaje explicando qué corregir. No se restauraron existencias.</p>
+        </div>
+
+        <a class="boton-secundario" href="dashboard.html">Volver al inicio</a>
+      </section>
+
+      <aside class="panel-lateral">
+        <h2 class="panel-titulo">DETALLES</h2>
+        <div class="caja-rosa resumen-producto">
+          <p class="texto-ayuda">Nombre del producto:</p>
+          <p class="producto-nombre">Sakura · primavera</p>
+          <p class="texto-ayuda">1 vendida · 0 devueltas · 1 disponible</p>
+        </div>
+        <div class="campo">
+          <label class="etiqueta" for="id-rev">ID interno del producto</label>
+          <input class="entrada" type="text" id="id-rev" value="FIG-001" readonly>
+        </div>
+        <div class="campo">
+          <label class="etiqueta" for="venta-rev">Venta original</label>
+          <input class="entrada" type="text" id="venta-rev" value="V-000128" readonly>
+        </div>
+        <div class="rejilla-formulario">
+          <div class="campo">
+            <label class="etiqueta" for="reembolso-rev">Reembolso</label>
+            <input class="entrada" type="text" id="reembolso-rev" value="$850.00" readonly>
+          </div>
+          <div class="campo">
+            <label class="etiqueta" for="precio-rev">Precio de venta</label>
+            <input class="entrada" type="text" id="precio-rev" value="$850.00" readonly>
+          </div>
+        </div>
+        <div class="campo">
+          <label class="etiqueta" for="cantidad-rev">Cantidad a devolver *</label>
+          <input class="entrada" type="number" id="cantidad-rev" name="cantidad" min="1" max="1" value="1">
+        </div>
+        <div class="campo">
+          <label class="etiqueta" for="motivo-rev">Motivo de devolución *</label>
+          <textarea class="area-texto motivo-devolucion" id="motivo-rev" name="motivo" placeholder="Selecciona el motivo">Empaque dañado</textarea>
+        </div>
+        <a class="boton boton-ancho" href="#modal-devolucion">REVISAR DEVOLUCIÓN</a>
+      </aside>
+    </div>
+
+    <!-- ===== MODAL: Confirmar devolución ===== -->
+    <section class="modal oculto" id="modal-devolucion" aria-label="Confirmar devolución">
+      <div class="modal-contenido">
+        <div class="modal-cabecera">
+          <h2 class="modal-titulo">Confirmar devolución</h2>
+          <a class="modal-cerrar" href="#cerrar" aria-label="Cerrar">✕</a>
+        </div>
+        <p class="texto-ayuda">Venta V-000128 · FIG-001 · Reembolso $850.00</p>
+        <div class="caja-rosa resumen-devolucion">
+          <div class="linea-dato"><span class="texto-ayuda">Producto</span><span>Sakura · primavera</span></div>
+          <div class="linea-dato"><span class="texto-ayuda">Cantidad a devolver</span><span>1 unidad</span></div>
+          <div class="linea-dato"><span class="texto-ayuda">Motivo</span><span>Empaque dañado</span></div>
+        </div>
+        <div class="alerta alerta-error">Solo al confirmar: registra la devolución y restaura 1 unidad.<br>Existencias: 11 ↘ 12. No excede la 1 unidad vendida.</div>
+        <div class="modal-acciones">
+          <a class="boton-secundario" href="#cerrar">Cancelar</a>
+          <a class="boton" href="#devolucion-confirmada">Confirmar devolución</a>
+        </div>
+        <p class="texto-ayuda">Aún no se ha restaurado inventario. Cancelar conserva la venta.</p>
+      </div>
+    </section>
+
+    <!-- ===== VISTA: Devolución confirmada ===== -->
+    <section class="vista oculto" id="devolucion-confirmada" aria-label="Devolución confirmada">
+      <div class="contenedor contenido">
+        <p class="ruta-navegacion">KamiKōbō / DEVOLUCIONES</p>
+        <h1 class="titulo-pagina">Devolución confirmada</h1>
+        <p class="subtitulo-pagina" data-folio="DEV-000021">DEV-000021 registrada · Inventario restaurado: 11 + 1 = 12 unidades.</p>
+        <div class="rejilla-con-panel">
+          <section>
+            <div class="caja-rosa">
+              <label class="etiqueta" for="folio-venta-conf">Folio de venta original *</label>
+              <input class="entrada" type="text" id="folio-venta-conf" value="V-000128" readonly>
+            </div>
+            <h2 class="seccion-titulo">Artículos de la venta</h2>
+            <p class="texto-ayuda">Venta V-000128 · 2026-11-23 · Ana López</p>
+        <div class="tabla-contenedor">
+          <table class="tabla">
+            <thead><tr><th>Producto · Vendidas</th><th>Devueltas</th><th>Disponibles</th></tr></thead>
+            <tbody>
+              <tr class="fila-seleccionada" data-id="FIG-001">
+                <td class="producto-nombre">Sakura · primavera · 1</td>
+                <td class="texto-peligro">1</td>
+                <td><strong>0</strong></td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="texto-ayuda nota-tabla">Devolución completada · No se puede devolver de nuevo esta unidad.</p>
+        </div>
+            <p class="texto-ayuda">Haz clic en el comprobante para cerrar la vista térmica.</p>
+            <div class="grupo-botones-venta">
+              <a class="boton-secundario" href="devoluciones.html">Nueva devolución</a>
+              <a class="boton-secundario" href="dashboard.html">Volver al inicio</a>
+            </div>
+          
+      <footer class="pie-pagina">
+        <div class="contenedor">
+          <p class="logo">KamiKōbō</p>
+          <p>Panel de administración</p>
+          <p>Catálogo · Compras · Ventas · Devoluciones</p>
+          <div class="pie-sesion">
+            <span>Sesión: Ana López / Administrador</span>
+            <span>Sistema de gestión comercial</span>
+          </div>
+        </div>
+      </footer>
+    </section>
+      <aside class="panel-lateral">
+        <h2 class="panel-titulo">DETALLES</h2>
+        <div class="caja-rosa resumen-producto">
+          <p class="texto-ayuda">Nombre del producto:</p>
+          <p class="producto-nombre">Sakura · primavera</p>
+          <p class="texto-ayuda">1 vendida · 1 devuelta · 0 disponibles</p>
+        </div>
+        <div class="campo">
+          <label class="etiqueta" for="id-conf">ID interno del producto</label>
+          <input class="entrada" type="text" id="id-conf" value="FIG-001" readonly>
+        </div>
+        <div class="campo">
+          <label class="etiqueta" for="venta-conf">Venta original</label>
+          <input class="entrada" type="text" id="venta-conf" value="V-000128" readonly>
+        </div>
+        <div class="rejilla-formulario">
+          <div class="campo">
+            <label class="etiqueta" for="reembolso-conf">Reembolso</label>
+            <input class="entrada" type="text" id="reembolso-conf" value="$850.00" readonly>
+          </div>
+          <div class="campo">
+            <label class="etiqueta" for="precio-conf">Precio de venta</label>
+            <input class="entrada" type="text" id="precio-conf" value="$850.00" readonly>
+          </div>
+        </div>
+        <div class="campo">
+          <label class="etiqueta" for="cantidad-conf">Cantidad devuelta</label>
+          <input class="entrada" type="number" id="cantidad-conf" name="cantidad" min="1" max="1" value="1">
+        </div>
+        <div class="campo">
+          <label class="etiqueta" for="motivo-conf">Motivo registrado</label>
+          <textarea class="area-texto motivo-devolucion" id="motivo-conf" name="motivo">Empaque dañado</textarea>
+        </div>
+        <a class="boton boton-ancho" href="#comprobante-devolucion">VER COMPROBANTE</a>
+      </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== VISTA: Comprobante de devolución (ticket) ===== -->
+    <section class="vista oculto" id="comprobante-devolucion" aria-label="Comprobante de devolución">
+      <div class="contenedor contenido">
+        <div class="fila fila-ticket">
+          <article class="ticket" data-folio="DEV-000021">
+            <p class="ticket-marca">KamiKōbō</p>
+            <p class="ticket-centrado">SISTEMA DE GESTIÓN COMERCIAL</p>
+            <p class="ticket-titulo">DEVOLUCIÓN</p>
+            <p>Folio: DEV-000021<br>Venta original: V-000128<br>Fecha: 2026-11-23 · Hora: 14:45<br>Usuario: Ana López<br>Rol: Administrador</p>
+            <hr class="ticket-separador">
+            <p>Producto: Sakura · primavera<br>ID interno: FIG-001<br>Código de barras: 7501234567893<br>Vendidas: 1 · Devueltas previas: 0</p>
+            <div class="ticket-linea"><strong>Cantidad</strong><strong>Precio unit.</strong><strong>Importe</strong></div>
+            <div class="ticket-linea"><span>1</span><span>$850.00</span><span>$850.00</span></div>
+            <hr class="ticket-separador">
+            <div class="ticket-linea"><strong>Subtotal</strong><strong>$732.76</strong></div>
+            <div class="ticket-linea"><strong>IVA 16%</strong><strong>$117.24</strong></div>
+            <div class="ticket-total"><span>TOTAL A DEVOLVER</span><span>$850.00</span></div>
+            <p>Motivo: Empaque dañado<br>Estado: CONFIRMADA<br>Existencias restauradas: +1<br>Inventario final: 12 unidades</p>
+            <p class="ticket-centrado">Precios en MXN · IVA incluido<br>Comprobante de devolución</p>
+          </article>
+          <div class="columna acciones-ticket">
+            <a class="boton" href="#devolucion-confirmada">Volver</a>
+          </div>
+        </div>
+      </div>
+    
+      <footer class="pie-pagina">
+        <div class="contenedor">
+          <p class="logo">KamiKōbō</p>
+          <p>Panel de administración</p>
+          <p>Catálogo · Compras · Ventas · Devoluciones</p>
+          <div class="pie-sesion">
+            <span>Sesión: Ana López / Administrador</span>
+            <span>Sistema de gestión comercial</span>
+          </div>
+        </div>
+      </footer>
+    </section>
+  </main>
+
+  <!-- PIE DE PÁGINA (idéntico en todas las páginas) -->
+  <footer class="pie-pagina">
+    <div class="contenedor">
+      <p class="logo">KamiKōbō</p>
+      <p>Panel de administración</p>
+      <p>Catálogo · Compras · Ventas · Devoluciones</p>
+      <div class="pie-sesion">
+        <span>Sesión: Ana López / Administrador</span>
+        <span>Sistema de gestión comercial</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js" defer></script>
+  <script src="../js/devoluciones/devoluciones.js" defer></script>
+  <script src="../js/devoluciones/devolucionesSQL.js" defer></script>
+</body>
+</html>

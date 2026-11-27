@@ -1,0 +1,13 @@
+/* ===== Login: imagen a la izquierda, formulario a la derecha ===== */
+.pagina-dividida { display: grid; grid-template-columns: 45% 55%; min-height: 100vh; }
+
+/* Panel de imagen */
+.panel-imagen { background-color: #F4B6C2; background-image: url("../../assets/img/login.jpg");
+  background-size: cover; background-position: center; display: flex; align-items: flex-end; padding: 28px; }
+.tarjeta-marca { width: 100%; }
+
+/* Panel del formulario */
+.panel-formulario { display: flex; align-items: center; padding: 0 80px; }
+.panel-formulario .formulario { width: 100%; max-width: 440px; }
+.boton-ancho { width: 100%; margin-top: 8px; }
+.pie-formulario { margin-top: 24px; }

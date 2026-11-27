@@ -1,0 +1,257 @@
+/* ===== Regla de roles =====
+   Si el body tiene data-rol="operador", se ocultan los elementos que
+   llevan data-rol="admin". Solo es visual; el permiso real va en el backend. */
+body[data-rol="operador"] [data-rol="admin"] { display: none !important; }
+
+/* ===== Encabezado ===== */
+.encabezado { background: var(--color-principal); color: #FFFFFF; }
+.encabezado .contenedor { display: flex; align-items: center; justify-content: flex-start; height: 56px; }
+.boton-menu { font-size: 28px; color: #FFFFFF; padding: 4px 8px; }
+.logo { font-style: italic; font-weight: 500; font-size: 24px; }
+.encabezado .logo { margin-left: 16px; margin-right: 48px; }
+.buscador { width: 400px; padding: 8px 12px; border: 0; border-radius: 6px; font-family: inherit; }
+.zona-usuario { position: relative; margin-left: auto; }
+.icono-usuario { font-size: 26px; color: #FFFFFF; padding: 4px 8px; }
+.menu-usuario { position: absolute; right: 0; top: 48px; width: 180px; background: #FFFFFF; color: var(--color-texto);
+  border: 1px solid var(--color-borde); border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); z-index: 20; }
+.menu-usuario:target { display: block; }
+.menu-usuario a { display: block; padding: 10px 14px; }
+.menu-usuario .enlace-peligro { color: var(--color-principal); }
+
+/* ===== Menú lateral con fondo oscuro (se abre con :target) ===== */
+.fondo-oscuro { position: fixed; top: 56px; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.25); z-index: 10; }
+.fondo-oscuro:target { display: block; }
+.menu-lateral { width: 260px; height: 100%; background: #FFFFFF; padding: 16px 20px; border-right: 1px solid var(--color-borde); }
+.menu-cabecera { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 20px; }
+.menu-lateral a { display: block; padding: 12px 0; }
+.menu-separador { border: 0; border-top: 1px solid var(--color-borde); margin: 12px 0; }
+.modal-cerrar { color: var(--color-principal); }
+
+/* ===== Pie de página ===== */
+.pie-pagina { background: var(--color-principal); color: #FFFFFF; padding: 40px 0; margin-top: 48px; }
+.pie-pagina .logo { margin-bottom: 8px; }
+.pie-pagina p { margin-top: 6px; }
+.pie-sesion { display: flex; justify-content: space-between; margin-top: 56px; font-size: 13px; }
+
+/* ===== Títulos de página ===== */
+.ruta-navegacion { font-size: 11px; color: var(--color-texto-suave); text-transform: uppercase; }
+.titulo-pagina { font-size: 32px; margin: 6px 0; }
+.subtitulo-pagina { color: var(--color-texto-suave); margin-bottom: 24px; }
+
+/* ===== Botones ===== */
+.boton { display: inline-block; padding: 10px 20px; background: var(--color-principal); color: #FFFFFF;
+  border: 1px solid var(--color-principal); border-radius: 6px; font-family: inherit; font-weight: 500; cursor: pointer; text-align: center; }
+.boton:hover { background: var(--color-principal-oscuro); }
+.boton-secundario { display: inline-block; padding: 10px 20px; background: #FFFFFF; color: var(--color-principal);
+  border: 1px solid var(--color-borde); border-radius: 6px; font-family: inherit; font-weight: 500; cursor: pointer; text-align: center; }
+.boton-secundario:hover { background: var(--color-rosa-claro); }
+.boton-peligro { background: var(--color-peligro); color: #FFFFFF; border: 0; border-radius: 6px; padding: 10px 20px; cursor: pointer; }
+.boton-enlace { color: var(--color-principal); font-weight: 500; }
+.boton:focus, .boton-secundario:focus, .entrada:focus, .boton-menu:focus { outline: 2px solid #1E1E1E; outline-offset: 2px; }
+.grupo-botones { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+.grupo-botones .boton-secundario { width: 100%; }
+
+/* ===== Tarjetas ===== */
+.tarjeta { background: #FFFFFF; border: 1px solid var(--color-borde); border-radius: 8px; padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+.tarjeta-rosa { background: var(--color-rosa-claro); }
+.tarjeta-titulo { font-family: var(--fuente-texto); font-weight: 500; font-size: 22px; margin-bottom: 6px; }
+
+/* ===== Formularios ===== */
+.campo { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
+.etiqueta { font-size: 13px; font-weight: 500; }
+.entrada { padding: 10px 12px; border: 1px solid var(--color-borde); border-radius: 6px; font-family: inherit; font-size: 14px; }
+.texto-ayuda { font-size: 12px; color: var(--color-texto-suave); }
+.texto-error { font-size: 12px; color: var(--color-alerta-texto); }
+
+/* ===== Alertas ===== */
+.alerta { padding: 12px 14px; border-radius: 6px; margin-bottom: 16px; font-size: 14px; }
+.alerta-error { background: var(--color-alerta-fondo); color: var(--color-alerta-texto); border: 1px solid var(--color-alerta-borde); }
+.alerta-exito { background: #EEF6F0; color: var(--color-exito); }
+
+/* ===== Insignias ===== */
+.insignia { display: inline-block; padding: 3px 10px; border-radius: 4px; background: #FFFFFF; font-size: 12px; color: var(--color-principal); }
+.insignia-disponible, .insignia-activa { color: var(--color-exito); }
+.insignia-agotado, .insignia-inactiva { color: var(--color-peligro); }
+
+/* ===== Correcciones de estados sobre componentes =====
+   Los estados de global.css (.activo, .deshabilitado, .error) se cargan ANTES que los
+   componentes, así que se repiten aquí combinados con la clase del componente. */
+.boton.deshabilitado { background: #C9BEC1; border-color: #C9BEC1; color: #FFFFFF; cursor: not-allowed; }
+.entrada.error, .selector.error, .area-texto.error { border-color: var(--color-alerta-borde); background: #FFF8F2; }
+
+/* ===== Encabezado sin buscador (todas las páginas excepto inicio, perfil, inventario y usuarios) ===== */
+.encabezado-simple .logo { margin-right: auto; }
+
+/* ===== Formularios (complemento) ===== */
+.formulario { display: block; }
+.selector { padding: 10px 12px; border: 1px solid var(--color-borde); border-radius: 6px; font-family: inherit; font-size: 14px; background: #FFFFFF; }
+.area-texto { padding: 10px 12px; border: 1px solid var(--color-borde); border-radius: 6px; font-family: inherit; font-size: 14px; min-height: 64px; resize: vertical; }
+.selector:focus, .area-texto:focus { outline: 2px solid #1E1E1E; outline-offset: 2px; }
+.rejilla-formulario { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 16px; }
+.rejilla-formulario-tres { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 16px; }
+.rejilla-formulario-cuatro { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0 16px; }
+.campo-ancho { grid-column: 1 / 3; }
+.barra-filtros { display: flex; gap: 16px; align-items: flex-end; margin-bottom: 16px; }
+.barra-filtros .campo { flex: 1; margin-bottom: 0; }
+.caja-rosa { background: var(--color-rosa-claro); border: 1px solid var(--color-borde); border-radius: 6px; padding: 12px 14px; }
+.caja-rosa .entrada { width: 100%; }
+
+/* ===== Alertas (complemento) ===== */
+.alerta-informacion { background: var(--color-rosa-claro); color: var(--color-texto); border: 0; border-left: 3px solid var(--color-alerta-borde); border-radius: 0 6px 6px 0; }
+.alerta-informacion .alerta-titulo { color: var(--color-alerta-texto); font-weight: 500; margin-bottom: 4px; }
+
+/* ===== Layout: contenido + panel lateral ===== */
+.rejilla-con-panel { display: grid; grid-template-columns: 1fr 340px; gap: 24px; align-items: start; }
+.panel-lateral { background: #FFFFFF; border: 1px solid var(--color-borde); border-radius: 8px; padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+.panel-titulo { font-family: var(--fuente-texto); font-weight: 500; font-size: 20px; margin-bottom: 4px; }
+.encabezado-pagina { display: flex; justify-content: space-between; align-items: flex-start; }
+.seccion-titulo { font-family: var(--fuente-texto); font-weight: 500; font-size: 22px; margin: 20px 0 4px; }
+.texto-derecha { text-align: right; }
+.texto-izquierda { text-align: left; }
+.texto-peligro { color: var(--color-peligro); }
+.texto-exito { color: var(--color-exito); }
+
+/* ===== Indicadores (KPI) ===== */
+.rejilla-kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 20px; }
+.indicador { display: flex; align-items: center; gap: 48px; background: #FFFFFF; border: 1px solid var(--color-borde); border-radius: 8px; padding: 16px 18px; }
+.indicador-numero { font-size: 24px; font-weight: 500; }
+.indicador-texto { font-size: 13px; color: var(--color-texto-suave); }
+.indicador-columna { flex-direction: column; align-items: flex-start; gap: 6px; }
+.indicador-destacado { background: var(--color-rosa-claro); }
+.indicador-destacado .indicador-numero { color: var(--color-principal); }
+
+/* ===== Chips de categoría ===== */
+.rejilla-chips { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 20px; }
+.chip { display: block; padding: 8px 12px; background: var(--color-rosa-claro); color: var(--color-principal); font-size: 13px; font-weight: 500; border-radius: 4px; }
+.chip:hover { background: #FFE0E6; }
+.chip.activo { background: var(--color-principal); color: #FFFFFF; }
+
+/* ===== Tarjetas de producto (inventario) ===== */
+.rejilla-productos { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+.tarjeta-producto { display: block; background: #FFFFFF; border: 1px solid var(--color-borde); border-radius: 8px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+.tarjeta-producto:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.12); }
+.producto-cabecera { position: relative; }
+.producto-cabecera .insignia { position: absolute; top: 8px; right: 8px; }
+.producto-imagen { display: block; width: 100%; height: 120px; object-fit: cover; background: var(--color-rosa-claro); color: var(--color-texto-suave); font-size: 12px; }
+.producto-cuerpo { padding: 10px 12px 14px; }
+.producto-meta { font-size: 11px; color: var(--color-texto-suave); }
+.producto-nombre { font-family: var(--fuente-texto); font-weight: 500; font-size: 16px; margin: 4px 0 8px; }
+.producto-pie { display: flex; justify-content: space-between; align-items: baseline; }
+.producto-precio { font-weight: 500; }
+.producto-existencias { font-size: 12px; color: var(--color-texto-suave); }
+
+/* ===== Tablas ===== */
+.tabla-contenedor { background: #FFFFFF; border: 1px solid var(--color-borde); border-radius: 8px; overflow: hidden; }
+.tabla { width: 100%; border-collapse: collapse; font-size: 13px; }
+.tabla th { background: var(--color-rosa-claro); text-align: left; font-weight: 500; padding: 12px 14px; }
+.tabla td { padding: 14px; }
+.fila-alterna { background: #FAF7F8; }
+.fila-seleccionada { background: var(--color-rosa-claro); }
+.fila-total { background: var(--color-rosa-claro); font-weight: 500; }
+.tabla .enlace-fila { color: var(--color-principal); font-weight: 500; }
+.tabla-pie { display: flex; justify-content: space-between; margin-top: 8px; font-size: 12px; color: var(--color-texto-suave); }
+
+/* ===== Modales (se abren con :target; cierran con href="#") ===== */
+.modal { position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 30; background: rgba(0,0,0,0.35); align-items: center; justify-content: center; }
+.modal:target { display: flex; }
+.modal-contenido { width: 520px; max-height: calc(100vh - 24px); overflow-y: auto; background: #FFFFFF; border-radius: 8px; padding: 20px 24px; box-shadow: 0 4px 16px rgba(0,0,0,0.2); }
+.modal-ancho { width: 620px; }
+.modal-cabecera { display: flex; justify-content: space-between; align-items: flex-start; }
+.modal-titulo { font-size: 24px; margin-bottom: 4px; }
+.modal-cerrar { font-size: 18px; padding: 4px 8px; }
+.modal-acciones { display: flex; justify-content: flex-end; gap: 12px; margin-top: 20px; }
+.modal-acciones .boton, .modal-acciones .boton-secundario, .modal-acciones .boton-peligro { border-radius: 20px; }
+.modal-detalle { display: flex; gap: 20px; margin: 16px 0; }
+.modal-imagen { width: 136px; height: 136px; object-fit: cover; border-radius: 6px; background: var(--color-rosa-claro); }
+.modal-datos p { margin-bottom: 6px; font-size: 13px; }
+.caja-archivo { display: flex; justify-content: space-between; align-items: center; background: var(--color-rosa-claro); border: 1px solid var(--color-borde); border-radius: 6px; padding: 12px; margin-bottom: 12px; }
+
+/* ===== Pestañas y selector de periodo ===== */
+.pestanas { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; margin-bottom: 16px; }
+.pestana { display: block; padding: 10px; background: var(--color-rosa-claro); color: var(--color-principal); text-align: center; font-weight: 500; font-size: 13px; border-radius: 6px; }
+.pestana.activo { background: var(--color-principal); color: #FFFFFF; }
+
+.grupo-opciones { display: flex; border: 1px solid var(--color-borde); border-radius: 6px; overflow: hidden; }
+.opcion { flex: 1; padding: 10px 8px; text-align: center; font-size: 12px; color: var(--color-texto-suave); }
+.opcion.activo { background: var(--color-rosa-claro); color: var(--color-principal); font-weight: 500; }
+
+/* ===== Paginación ===== */
+.paginacion { display: flex; gap: 8px; align-items: center; }
+.pagina-enlace { padding: 8px 18px; background: var(--color-rosa-claro); color: var(--color-principal); border: 1px solid var(--color-borde); border-radius: 6px; font-size: 13px; }
+.pagina-enlace.activo { background: var(--color-principal); color: #FFFFFF; }
+
+/* ===== Reportes impresos: firma y bloques solo para impresión ===== */
+.firma { font-size: 12px; color: var(--color-texto-suave); }
+.linea-firma { border: 0; border-top: 1px solid var(--color-texto); width: 280px; margin: 48px 0 6px; }
+.solo-impresion { display: none; }
+.nota-formato { background: var(--color-rosa-claro); border-radius: 6px; padding: 12px 14px; font-size: 12px; color: var(--color-texto-suave); margin-top: 12px; }
+
+/* ===== Ticket térmico (80 mm, monocromático) ===== */
+.ticket { width: 302px; background: #FFFFFF; color: #000000; border: 1px solid var(--color-borde); padding: 16px; font-size: 12px; line-height: 1.5; }
+.ticket-centrado { text-align: center; }
+.ticket-marca { font-size: 20px; font-weight: 500; text-align: center; }
+.ticket-titulo { font-size: 16px; font-weight: 500; text-align: center; margin: 8px 0; }
+.ticket-separador { border: 0; border-top: 1px dashed #000000; margin: 8px 0; }
+.ticket-linea { display: flex; justify-content: space-between; }
+.ticket-total { display: flex; justify-content: space-between; font-size: 15px; font-weight: 500; margin: 6px 0; }
+
+/* ===== Vistas de pantalla completa (Venta confirmada, comprobantes, formularios de usuario…) =====
+   Ocultas con .oculto; se muestran con :target, igual que los modales. Cubren la página bajo el encabezado. */
+.vista { position: fixed; top: 56px; left: 0; right: 0; bottom: 0; z-index: 5; background: #FFFFFF; overflow-y: auto; }
+.vista:target { display: flex; flex-direction: column; }
+.vista > .pie-pagina { margin-top: auto; flex-shrink: 0; }
+.vista > .contenido { width: 100%; }
+
+/* ===== Regla de roles (complemento) =====
+   Lo contrario: si el body es data-rol="admin", se ocultan los elementos exclusivos del Operador
+   (por ejemplo "Acceso restringido" y los textos de perfil del Operador). */
+body[data-rol="admin"] [data-rol="operador"] { display: none !important; }
+
+/* ===== Textos de color de marca y avatar ===== */
+.texto-principal { color: var(--color-principal); }
+.avatar { display: block; width: 64px; height: 64px; font-size: 44px; line-height: 64px; text-align: left; }
+.boton-ancho { width: 100%; }
+.boton-pequeno { padding: 6px 14px; font-size: 13px; }
+
+/* ===== Línea de dato (etiqueta a la izquierda, valor a la derecha) ===== */
+.linea-dato { display: flex; justify-content: space-between; gap: 12px; }
+
+/* ===== Grupos de acciones y utilidades compartidas ===== */
+.grupo-botones-venta { display: flex; gap: 16px; margin: 16px 0; }
+.grupo-acciones { display: flex; gap: 12px; }
+.fila-ticket { display: flex; align-items: flex-start; gap: 48px; }
+.acciones-ticket { width: 200px; }
+.separador-boton { margin-top: 24px; }
+.logo-rojo { color: var(--color-principal); }
+
+/* ===== Cabecera impresa de reportes (Reportes y Cierre de caja) ===== */
+.cabecera-impresion { margin-bottom: 20px; }
+.titulo-impresion { font-size: 26px; margin: 12px 0; }
+.linea-roja { border: 0; border-top: 2px solid var(--color-principal); margin: 12px 0 20px; }
+.firma-responsable { margin-top: 24px; }
+
+/* Chip de categoría (filtro del inventario): texto alineado a la izquierda */
+.chip-categoria { text-align: left; }
+
+/* ===== .oculto sobre componentes que definen su propio display ===== */
+.boton.oculto, .boton-secundario.oculto { display: none; }
+
+/* ===== Ventanas emergentes compactas: deben verse completas a 1024×768 sin deslizar ===== */
+.modal-contenido .campo { margin-bottom: 10px; }
+.modal-contenido .alerta { margin: 10px 0; }
+.modal-contenido .modal-acciones { margin-top: 12px; }
+.modal-contenido .caja-archivo { margin-bottom: 8px; padding: 8px 12px; }
+.modal-contenido .modal-detalle { margin: 10px 0; }
+.modal-contenido .seccion-titulo { margin-top: 0; }
+.modal-contenido .formulario > .texto-ayuda { margin-top: 4px; }
+.modal-contenido .modal-acciones + .texto-ayuda { margin-top: 10px; }
+
+/* Pie compacto dentro de las vistas de pantalla completa (para evitar deslizar en 1024×768) */
+.vista > .pie-pagina { padding: 18px 0; margin-top: auto; }
+.vista > .pie-pagina .pie-sesion { margin-top: 16px; }
+.vista > .contenido { padding-top: 16px; padding-bottom: 24px; }
+.vista .titulo-pagina { margin: 2px 0; }
+.vista .subtitulo-pagina { margin-bottom: 12px; }
+.vista .ticket { padding: 12px 16px; line-height: 1.4; }
+.vista .ticket-titulo { margin: 4px 0; }
+.campo .entrada, .campo .selector { width: 100%; min-width: 0; }

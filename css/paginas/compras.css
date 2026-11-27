@@ -1,0 +1,13 @@
+/* ===== Compras: barra para agregar productos ===== */
+.barra-agregar { display: flex; gap: 16px; align-items: flex-end; margin-bottom: 8px; }
+.barra-agregar .campo { flex: 1; margin-bottom: 0; }
+
+/* ===== Compras: notas bajo la tabla ===== */
+.nota-compra { margin: 10px 0 14px; }
+
+/* ===== Compras: panel Resumen de compra ===== */
+.linea-resumen { padding: 8px 0; }
+.linea-separada { border-top: 1px solid var(--color-borde); margin-top: 8px; padding-top: 14px; }
+.total-compra { display: flex; justify-content: space-between; align-items: center; font-size: 18px; font-weight: 500; margin: 10px 0 16px; }
+.total-compra-importe { color: var(--color-principal); font-size: 22px; }
+.panel-lateral .boton-ancho { margin-top: 8px; }

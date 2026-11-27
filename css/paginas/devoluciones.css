@@ -1,0 +1,7 @@
+/* ===== Devoluciones ===== */
+.nota-tabla { padding: 24px 14px 14px; }
+.resumen-producto { margin-bottom: 16px; }
+.resumen-devolucion { display: flex; flex-direction: column; gap: 10px; margin: 16px 0; }
+.alerta .alerta-titulo { font-weight: 500; margin-bottom: 4px; }
+.motivo-devolucion { min-height: 72px; }
+.panel-lateral .boton-ancho { margin-top: 8px; }

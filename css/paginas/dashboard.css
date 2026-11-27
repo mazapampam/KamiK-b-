@@ -1,0 +1,10 @@
+/* ===== Inicio: tarjetas de módulos ===== */
+.rejilla-tarjetas { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; margin-bottom: 24px; }
+.tarjeta-modulo { display: flex; flex-direction: column; gap: 28px; min-height: 160px; }
+.tarjeta-ancha { margin-bottom: 24px; display: flex; flex-direction: column; gap: 14px; }
+
+/* ===== Tarjetas con número, ícono e imagen difuminada ===== */
+.tarjeta-modulo, .tarjeta-ancha { position: relative; overflow: hidden; }
+.tarjeta-numero { font-size: 11px; font-weight: 500; color: var(--color-principal); }
+.tarjeta-icono { width: 22px; height: 22px; }
+.tarjeta-fondo { position: absolute; top: 0; right: 0; width: 28%; height: 100%; object-fit: cover; opacity: 0.35; filter: blur(1px); pointer-events: none; }

@@ -1,0 +1,51 @@
+/* ===== Fuentes (con respaldo) ===== */
+@import url("https://fonts.googleapis.com/css2?family=Rubik:wght@400;500&family=Source+Serif+4:wght@700&display=swap");
+
+/* ===== Variables de color y tipografía ===== */
+:root {
+  --color-principal: #D6002B;
+  --color-principal-oscuro: #A80022;
+  --color-rosa-claro: #FFF0F3;
+  --color-texto: #1E1E1E;
+  --color-texto-suave: #6B6B6B;
+  --color-alerta-fondo: #FFEFE0;
+  --color-alerta-borde: #E8730C;
+  --color-alerta-texto: #9A3F00;
+  --color-exito: #1F6B3A;
+  --color-peligro: #D6002B;
+  --color-borde: #E3E3E3;
+  --fuente-titulos: "Source Serif 4", Georgia, serif;
+  --fuente-texto: "Rubik", system-ui, sans-serif;
+}
+
+/* ===== Reset simple ===== */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+a { color: inherit; text-decoration: none; }
+
+/* ===== Layout base (solo escritorio, mínimo 1024 px) ===== */
+body {
+  min-width: 1024px;
+  font-family: var(--fuente-texto);
+  color: var(--color-texto);
+  background: #FFFFFF;
+  line-height: 1.4;
+}
+h1, h2 { font-family: var(--fuente-titulos); }
+.contenedor { max-width: 1280px; margin: 0 auto; padding: 0 32px; }
+.contenido { padding-top: 24px; padding-bottom: 64px; }
+.fila { display: flex; gap: 16px; align-items: center; }
+.columna { display: flex; flex-direction: column; gap: 12px; }
+
+/* ===== Estados reutilizables ===== */
+.oculto { display: none; }
+.activo { background: var(--color-principal); color: #FFFFFF; }
+.deshabilitado { background: #C9BEC1; color: #FFFFFF; cursor: not-allowed; }
+.error { border-color: var(--color-alerta-borde); background: #FFF8F2; }
+
+/* ===== Impresión (base) ===== */
+@media print {
+  .no-imprimir { display: none; }
+  .encabezado, .pie-pagina, .fondo-oscuro, .modal, .vista { display: none; }
+  .fondo-oscuro:target, .modal:target, .vista:target { display: none; }
+  body { min-width: 0; }
+}

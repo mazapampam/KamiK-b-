@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Cierre de caja · KamiKōbō</title>
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/componentes.css">
+  <link rel="stylesheet" href="../css/interacciones.css">
+  <link rel="stylesheet" href="../css/paginas/cierre-caja.css">
+</head>
+<!-- Cambiar a data-rol="operador" para probar el rol Operador -->
+<body data-rol="admin">
+
+  <!-- ENCABEZADO (idéntico en todas las páginas; luego puede extraerse a un componente) -->
+  <header class="encabezado encabezado-simple">
+    <div class="contenedor">
+      <a class="boton-menu" href="#menu" aria-label="Abrir menú">☰</a>
+      <a class="logo" href="dashboard.html">KamiKōbō</a>
+      <div class="zona-usuario">
+        <a class="icono-usuario" href="#menu-usuario" aria-label="Menú de usuario">👤</a>
+        <nav class="menu-usuario oculto" id="menu-usuario">
+          <a href="perfil.html">Ver perfil</a>
+          <a class="enlace-peligro" href="login.html">Cerrar sesión</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- MENÚ LATERAL (se abre con :target; cierra con href="#cerrar") -->
+  <div class="fondo-oscuro oculto" id="menu">
+    <nav class="menu-lateral">
+      <div class="menu-cabecera"><strong>NAVEGACIÓN</strong><a class="modal-cerrar" href="#cerrar" aria-label="Cerrar menú">✕</a></div>
+      <a href="ventas.html">Punto de venta</a>
+      <a href="inventario.html">Inventario</a>
+      <a href="compras.html" data-rol="admin">Compras</a>
+      <a href="devoluciones.html">Devoluciones</a>
+      <a href="historial.html" data-rol="admin">Historial y Consultas</a>
+      <a href="reportes.html" data-rol="admin">Reportes</a>
+      <a href="usuarios.html" data-rol="admin">Usuarios y Roles</a>
+      <a href="cierre-caja.html" data-rol="admin">Cierre de caja</a>
+      <hr class="menu-separador">
+      <p class="texto-ayuda">Panel de administración</p>
+    </nav>
+  </div>
+
+  <main class="contenedor contenido">
+    <p class="ruta-navegacion">KamiKōbō / CIERRE DE CAJA</p>
+    <div class="encabezado-pagina">
+      <div>
+        <h1 class="titulo-pagina">Cierre de caja</h1>
+        <p class="subtitulo-pagina no-imprimir">Módulo independiente · Concilia el efectivo y confirma el corte del día.</p>
+      </div>
+      
+    </div>
+
+    <form class="barra-filtros no-imprimir" action="#" method="get">
+      <div class="campo"><label class="etiqueta" for="desde-cc">Desde</label><input class="entrada" type="text" id="desde-cc" value="2026-11-23"></div>
+      <div class="campo"><label class="etiqueta" for="hasta-cc">Hasta</label><input class="entrada" type="text" id="hasta-cc" value="2026-11-23"></div>
+      <div class="campo"><label class="etiqueta" for="cajero-cc">Usuario / cajero</label><select class="selector" id="cajero-cc"><option>Todos</option><option>Ana López</option><option>Luis Pérez</option></select></div>
+      <div class="campo"><span class="etiqueta">Periodo</span><div class="grupo-opciones"><a class="opcion activo" href="#cerrar">Diario</a><a class="opcion" href="#cerrar">Semanal</a><a class="opcion" href="#cerrar">Mensual</a></div></div>
+      <button class="boton" type="submit">Aplicar filtros</button>
+    </form>
+
+    <div class="rejilla-kpis no-imprimir">
+      <div class="indicador indicador-columna indicador-destacado"><span class="indicador-texto">Efectivo esperado</span><span class="indicador-numero">$4,020.00</span></div>
+      <div class="indicador indicador-columna"><span class="indicador-texto">Fondo inicial</span><span class="indicador-numero">$500.00</span></div>
+      <div class="indicador indicador-columna"><span class="indicador-texto">Efectivo contado</span><span class="indicador-numero">$0.00 · Capturar</span></div>
+    </div>
+
+    <!-- Cabecera solo para impresión -->
+    <div class="solo-impresion cabecera-impresion">
+      <p class="logo logo-rojo">KamiKōbō</p>
+      <p class="texto-ayuda">Sistema de gestión comercial</p>
+      <hr class="linea-roja">
+      <h2 class="titulo-impresion">Cierre de caja · Corte del día</h2>
+      <p>Periodo: 2026-11-23 a 2026-11-23 · Todos los cajeros</p>
+      <p class="texto-ayuda">Generado: 2026-11-23 13:00</p>
+    </div>
+
+    <div class="encabezado-pagina no-imprimir">
+      <h2 class="seccion-titulo">Cierre de caja · Corte del día</h2>
+      <div class="grupo-acciones">
+        <a class="boton-secundario" href="#cerrar">Exportar CSV</a>
+        <a class="boton" href="#cerrar">Imprimir reporte</a>
+      </div>
+    </div>
+    <p class="texto-ayuda no-imprimir"><span class="logo logo-rojo">KamiKōbō</span> &nbsp; 2026-11-23 a 2026-11-23 · Todos los cajeros · Generado: 2026-11-23 13:00</p>
+
+    <!-- BACKEND: conceptos del corte según los filtros -->
+    <div class="tabla-contenedor">
+      <table class="tabla">
+        <thead><tr><th>Concepto</th><th class="texto-derecha">Operaciones</th><th class="texto-derecha">Entradas</th><th class="texto-derecha">Salidas</th></tr></thead>
+        <tbody>
+          <tr><td>Fondo inicial de caja</td><td class="texto-derecha">—</td><td class="texto-derecha">$500.00</td><td class="texto-derecha">$0.00</td></tr>
+          <tr class="fila-alterna"><td>Ventas en efectivo</td><td class="texto-derecha">4</td><td class="texto-derecha">$4,000.00</td><td class="texto-derecha">$0.00</td></tr>
+          <tr><td>Devoluciones en efectivo</td><td class="texto-derecha">1</td><td class="texto-derecha">$0.00</td><td class="texto-derecha">$480.00</td></tr>
+          <tr><td colspan="4">
+            <!-- Estado de diferencia: pendiente (visible) / conciliado (oculto). El JS cambia cuál se muestra -->
+            <p class="texto-ayuda estado-diferencia">Corte pendiente de conciliación · Capturar efectivo contado para determinar la diferencia y confirmar el cierre.</p>
+            <p class="texto-ayuda estado-diferencia oculto">Diferencia: $0.00 · El efectivo contado coincide con el esperado. Listo para confirmar el cierre.</p>
+          </td></tr>
+          <tr class="fila-total"><td colspan="3">Efectivo esperado · $500.00 + $4,000.00 − $480.00</td><td class="texto-derecha texto-principal">$4,020.00</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="tabla-pie">
+      <span class="firma">Responsable: Ana López · Vo. Bo. ____________________</span>
+      <span>Corte diario · Página 1 de 1</span>
+    </div>
+
+    <div class="solo-impresion">
+      <p class="firma-responsable">Responsable: Ana López · Administrador</p>
+      <hr class="linea-firma">
+      <p class="firma">Firma / Vo. Bo.</p>
+    </div>
+
+    <div class="nota-formato no-imprimir">
+      CSV: todos los resultados filtrados · UTF-8 con BOM · separador coma · encabezados de columna<br>
+      Fechas AAAA-MM-DD HH:MM · importes con 2 decimales, sin símbolo monetario · Impresión A4 o Carta
+    </div>
+
+    <!-- El JS alterna estos dos botones: primero "Capturar efectivo contado", luego "Confirmar cierre de caja" -->
+    <div class="acciones-cierre no-imprimir">
+      <button class="boton boton-ancho" type="button">Capturar efectivo contado</button>
+      <button class="boton boton-ancho oculto" type="button">Confirmar cierre de caja</button>
+    </div>
+  </main>
+
+  <!-- PIE DE PÁGINA (idéntico en todas las páginas) -->
+  <footer class="pie-pagina">
+    <div class="contenedor">
+      <p class="logo">KamiKōbō</p>
+      <p>Panel de administración</p>
+      <p>Catálogo · Compras · Ventas · Devoluciones</p>
+      <div class="pie-sesion">
+        <span>Sesión: Ana López / Administrador</span>
+        <span>Sistema de gestión comercial</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js" defer></script>
+</body>
+</html>

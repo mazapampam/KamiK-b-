@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Usuarios y roles · KamiKōbō</title>
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/componentes.css">
+  <link rel="stylesheet" href="../css/interacciones.css">
+  <link rel="stylesheet" href="../css/paginas/usuarios.css">
+</head>
+<!-- Cambiar a data-rol="operador" para probar el rol Operador -->
+<body data-rol="admin">
+
+  <!-- ENCABEZADO (idéntico en todas las páginas; luego puede extraerse a un componente) -->
+  <header class="encabezado">
+    <div class="contenedor">
+      <a class="boton-menu" href="#menu" aria-label="Abrir menú">☰</a>
+      <a class="logo" href="dashboard.html">KamiKōbō</a>
+      <input class="buscador" type="search" placeholder="Buscar en el sistema…" aria-label="Buscar en el sistema">
+      <div class="zona-usuario">
+        <a class="icono-usuario" href="#menu-usuario" aria-label="Menú de usuario">👤</a>
+        <nav class="menu-usuario oculto" id="menu-usuario">
+          <a href="perfil.html">Ver perfil</a>
+          <a class="enlace-peligro" href="login.html">Cerrar sesión</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- MENÚ LATERAL (se abre con :target; cierra con href="#cerrar") -->
+  <div class="fondo-oscuro oculto" id="menu">
+    <nav class="menu-lateral">
+      <div class="menu-cabecera"><strong>NAVEGACIÓN</strong><a class="modal-cerrar" href="#cerrar" aria-label="Cerrar menú">✕</a></div>
+      <a href="ventas.html">Punto de venta</a>
+      <a href="inventario.html">Inventario</a>
+      <a href="compras.html" data-rol="admin">Compras</a>
+      <a href="devoluciones.html">Devoluciones</a>
+      <a href="historial.html" data-rol="admin">Historial y Consultas</a>
+      <a href="reportes.html" data-rol="admin">Reportes</a>
+      <a href="usuarios.html" data-rol="admin">Usuarios y Roles</a>
+      <a href="cierre-caja.html" data-rol="admin">Cierre de caja</a>
+      <hr class="menu-separador">
+      <p class="texto-ayuda">Panel de administración</p>
+    </nav>
+  </div>
+
+  <main class="contenedor contenido">
+    <!-- Contenido solo para Administrador: con data-rol="operador" en el body se oculta y aparece "Acceso restringido" -->
+    <div data-rol="admin">
+    <p class="ruta-navegacion">KamiKōbō / USUARIOS Y ROLES</p>
+    <div class="encabezado-pagina">
+      <div>
+        <h1 class="titulo-pagina">Usuarios y roles</h1>
+        <p class="subtitulo-pagina">Solo Administrador · Consulta, registra, edita y desactiva cuentas.</p>
+      </div>
+      <a class="boton" href="#registrar-usuario">+ Registrar usuario</a>
+    </div>
+
+      <!-- BACKEND: lista de usuarios (data-id = nombre de usuario) -->
+      <div class="tabla-contenedor">
+        <table class="tabla">
+          <thead><tr><th>Usuario</th><th>Nombre</th><th>Rol</th><th>Estado</th><th class="texto-derecha">Acciones</th></tr></thead>
+          <tbody>
+            <tr class="fila-seleccionada" data-id="ana.lopez">
+              <td><strong>ana.lopez</strong></td><td>Ana López</td><td>Administrador</td>
+              <td><span class="insignia insignia-activa">Activa</span></td><td></td>
+            </tr>
+            <tr data-id="luis.perez">
+              <td><strong>luis.perez</strong></td><td>Luis Pérez</td><td>Operador</td>
+              <td><span class="insignia insignia-activa">Activa</span></td>
+              <td class="texto-derecha">
+                <a class="boton-secundario boton-pequeno" href="#editar-usuario">Editar</a>
+                <a class="boton-secundario boton-pequeno" href="#desactivar-usuario">Desactivar</a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 class="seccion-titulo">Permisos por rol</h2>
+      <section class="tarjeta tarjeta-rosa rejilla-formulario">
+        <div>
+          <h3 class="tarjeta-titulo">Administrador</h3>
+          <p>Gestiona productos, compras, devoluciones y usuarios.<br>Consulta todos los reportes y movimientos.<br>Realiza ventas y cierre de caja independiente.</p>
+        </div>
+        <div>
+          <h3 class="tarjeta-titulo">Operador</h3>
+          <p>Realiza ventas y consulta el catálogo.<br>Sin alta/edición de productos o usuarios.<br>Sin compras, devoluciones, reportes ni cierre de caja.</p>
+        </div>
+      </section>
+      <p class="separador-boton"><a class="boton-secundario" href="dashboard.html">Volver al inicio</a></p>
+    </div>
+
+    <!-- Vista "Acceso restringido": solo se muestra con data-rol="operador" en el body -->
+    <section data-rol="operador" aria-label="Acceso restringido">
+    <p class="ruta-navegacion">KamiKōbō / ACCESO RESTRINGIDO</p>
+    <div class="encabezado-pagina">
+      <div>
+        <h1 class="titulo-pagina">Acceso restringido</h1>
+        <p class="subtitulo-pagina">Tu cuenta Operador no tiene permiso para abrir este módulo.</p>
+      </div>
+      
+    </div>
+      <div class="tarjeta tarjeta-rosa">
+        <h2 class="tarjeta-titulo">Se requiere el rol Administrador</h2>
+        <p>No se realizó ningún cambio. Pide al administrador que gestione esta operación.</p>
+        <p class="separador-boton"><a class="boton" href="dashboard.html">Volver al inicio</a></p>
+      </div>
+    </section>
+
+    <!-- ===== VISTAS de usuarios (se abren con :target) ===== -->
+    <section class="vista oculto" id="registrar-usuario" aria-label="Registrar usuario">
+      <div class="contenedor contenido">
+        <p class="ruta-navegacion">KamiKōbō / REGISTRAR USUARIO</p>
+        <h1 class="titulo-pagina">Registrar usuario</h1>
+        <p class="subtitulo-pagina">Solo Administrador · * Campos obligatorios. Roles permitidos: Administrador y Operador.</p>
+        <form class="tarjeta formulario" action="#" method="post">
+          <!-- Estado de error: el JS quita .oculto y marca los campos con .error -->
+          <div class="alerta alerta-error oculto">No se guardó el usuario. Completa nombre, usuario, contraseña y rol.</div>
+          <div class="rejilla-formulario">
+            <div class="campo"><label class="etiqueta" for="nombre-registrar-usuario">Nombre *</label><input class="entrada" type="text" id="nombre-registrar-usuario" name="nombre" value="" placeholder="Nombre completo" required></div>
+            <div class="campo"><label class="etiqueta" for="usuario-registrar-usuario">Usuario *</label><input class="entrada" type="text" id="usuario-registrar-usuario" name="usuario" value="" placeholder="Usuario único" required></div>
+            <div class="campo"><label class="etiqueta" for="clave-registrar-usuario">Contraseña *</label><input class="entrada" type="password" id="clave-registrar-usuario" name="clave" value="" placeholder="Ingresa una contraseña" required><p class="texto-error oculto">Contraseña de al menos 8 caracteres.</p></div>
+            <div class="campo"><label class="etiqueta" for="rol-registrar-usuario">Rol *</label><select class="selector" id="rol-registrar-usuario" name="rol"><option>Selecciona Administrador u Operador</option><option>Administrador</option><option>Operador</option></select></div>
+          </div>
+          <p><strong>Estado de cuenta: Activa</strong></p>
+          <p class="texto-ayuda">Usuario único · contraseña de al menos 8 caracteres · no se guardan formularios incompletos.</p>
+          <div class="modal-acciones">
+            <a class="boton-secundario" href="#cerrar">Cancelar</a>
+            <a class="boton" href="#usuario-guardado">Guardar usuario</a>
+          </div>
+        </form>
+      </div>
+    
+      <footer class="pie-pagina">
+        <div class="contenedor">
+          <p class="logo">KamiKōbō</p>
+          <p>Panel de administración</p>
+          <p>Catálogo · Compras · Ventas · Devoluciones</p>
+          <div class="pie-sesion">
+            <span>Sesión: Ana López / Administrador</span>
+            <span>Sistema de gestión comercial</span>
+          </div>
+        </div>
+      </footer>
+    </section>
+    <section class="vista oculto" id="editar-usuario" aria-label="Editar usuario">
+      <div class="contenedor contenido">
+        <p class="ruta-navegacion">KamiKōbō / EDITAR USUARIO</p>
+        <h1 class="titulo-pagina">Editar usuario</h1>
+        <p class="subtitulo-pagina">Solo Administrador · * Campos obligatorios. Roles permitidos: Administrador y Operador.</p>
+        <form class="tarjeta formulario" action="#" method="post">
+
+          <div class="rejilla-formulario">
+            <div class="campo"><label class="etiqueta" for="nombre-editar-usuario">Nombre *</label><input class="entrada" type="text" id="nombre-editar-usuario" name="nombre" value="Luis Pérez" placeholder="Nombre completo" required></div>
+            <div class="campo"><label class="etiqueta" for="usuario-editar-usuario">Usuario *</label><input class="entrada" type="text" id="usuario-editar-usuario" name="usuario" value="luis.perez" placeholder="Usuario único" required></div>
+            <div class="campo"><label class="etiqueta" for="clave-editar-usuario">Contraseña *</label><input class="entrada" type="password" id="clave-editar-usuario" name="clave" value="••••••••" placeholder="Ingresa una contraseña" required><p class="texto-error oculto">Contraseña de al menos 8 caracteres.</p></div>
+            <div class="campo"><label class="etiqueta" for="rol-editar-usuario">Rol *</label><select class="selector" id="rol-editar-usuario" name="rol"><option>Operador</option><option>Administrador</option><option>Operador</option></select></div>
+          </div>
+          <p><strong>Estado de cuenta: Activa</strong></p>
+          <p class="texto-ayuda">La contraseña actual no se muestra. Los cambios conservan el historial del usuario.</p>
+          <div class="modal-acciones">
+            <a class="boton-secundario" href="#cerrar">Cancelar</a>
+            <a class="boton" href="#cambios-guardados">Guardar usuario</a>
+          </div>
+        </form>
+      </div>
+    
+      <footer class="pie-pagina">
+        <div class="contenedor">
+          <p class="logo">KamiKōbō</p>
+          <p>Panel de administración</p>
+          <p>Catálogo · Compras · Ventas · Devoluciones</p>
+          <div class="pie-sesion">
+            <span>Sesión: Ana López / Administrador</span>
+            <span>Sistema de gestión comercial</span>
+          </div>
+        </div>
+      </footer>
+    </section>
+    <section class="vista oculto" id="desactivar-usuario" aria-label="Desactivar usuario">
+      <div class="contenedor contenido">
+        <p class="ruta-navegacion">KamiKōbō / DESACTIVAR USUARIO</p>
+        <h1 class="titulo-pagina">Desactivar usuario</h1>
+        <p class="subtitulo-pagina">Solo Administrador · Esta acción no elimina el historial de operaciones.</p>
+        <div class="tarjeta tarjeta-rosa">
+          <h2 class="tarjeta-titulo">¿Desactivar la cuenta de Luis Pérez?</h2>
+          <p>Usuario: luis.perez · Rol: Operador<br>No podrá iniciar sesión mientras su cuenta esté inactiva.<br>Las ventas y movimientos registrados se conservan.</p>
+          <div class="modal-acciones">
+            <a class="boton-secundario" href="#cerrar">Cancelar</a>
+            <a class="boton" href="#usuario-desactivado">Confirmar desactivación</a>
+          </div>
+        </div>
+      </div>
+    
+      <footer class="pie-pagina">
+        <div class="contenedor">
+          <p class="logo">KamiKōbō</p>
+          <p>Panel de administración</p>
+          <p>Catálogo · Compras · Ventas · Devoluciones</p>
+          <div class="pie-sesion">
+            <span>Sesión: Ana López / Administrador</span>
+            <span>Sistema de gestión comercial</span>
+          </div>
+        </div>
+      </footer>
+    </section>
+
+    <section class="vista oculto" id="usuario-guardado" aria-label="Usuario guardado">
+      <div class="contenedor contenido">
+        <p class="ruta-navegacion">KamiKōbō / USUARIOS Y ROLES</p>
+        <h1 class="titulo-pagina">Usuarios y roles</h1>
+        <div class="alerta alerta-exito">Usuario guardado correctamente. Los cambios de acceso se aplican al siguiente inicio de sesión.</div>
+        <div class="tarjeta tarjeta-rosa" data-id="marta.ruiz">
+          <h2 class="tarjeta-titulo">marta.ruiz · Marta Ruiz</h2>
+          <p>Rol: Operador · Estado: Activa</p>
+          <p class="texto-ayuda">Permisos: ventas y consulta del catálogo. Sin funciones administrativas.</p>
+        </div>
+        <p><a class="boton" href="#cerrar">Volver a usuarios</a></p>
+      </div>
+    
+      <footer class="pie-pagina">
+        <div class="contenedor">
+          <p class="logo">KamiKōbō</p>
+          <p>Panel de administración</p>
+          <p>Catálogo · Compras · Ventas · Devoluciones</p>
+          <div class="pie-sesion">
+            <span>Sesión: Ana López / Administrador</span>
+            <span>Sistema de gestión comercial</span>
+          </div>
+        </div>
+      </footer>
+    </section>
+
+    <section class="vista oculto" id="cambios-guardados" aria-label="Cambios guardados">
+      <div class="contenedor contenido">
+        <p class="ruta-navegacion">KamiKōbō / USUARIOS Y ROLES</p>
+        <h1 class="titulo-pagina">Usuarios y roles</h1>
+        <div class="alerta alerta-exito">Cambios guardados correctamente.</div>
+        <div class="tarjeta" data-id="luis.perez">
+          <h2 class="tarjeta-titulo">Luis Pérez · luis.perez · Operador · Activa</h2>
+          <p class="texto-ayuda">Se conserva su historial y sus movimientos asociados.</p>
+        </div>
+        <p><a class="boton" href="#cerrar">Volver a usuarios</a></p>
+      </div>
+    
+      <footer class="pie-pagina">
+        <div class="contenedor">
+          <p class="logo">KamiKōbō</p>
+          <p>Panel de administración</p>
+          <p>Catálogo · Compras · Ventas · Devoluciones</p>
+          <div class="pie-sesion">
+            <span>Sesión: Ana López / Administrador</span>
+            <span>Sistema de gestión comercial</span>
+          </div>
+        </div>
+      </footer>
+    </section>
+
+    <section class="vista oculto" id="usuario-desactivado" aria-label="Cuenta desactivada">
+      <div class="contenedor contenido">
+        <p class="ruta-navegacion">KamiKōbō / USUARIOS Y ROLES</p>
+        <h1 class="titulo-pagina">Usuarios y roles</h1>
+        <div class="alerta alerta-exito">Cuenta desactivada correctamente. El usuario no puede iniciar sesión.</div>
+        <div class="tabla-contenedor">
+          <table class="tabla"><tbody>
+            <tr class="fila-seleccionada"><td><strong>luis.perez</strong></td><td>Luis Pérez</td><td>Operador</td><td class="texto-peligro">Inactiva</td></tr>
+          </tbody></table>
+        </div>
+        <p><a class="boton" href="#cerrar">Volver a usuarios</a></p>
+      </div>
+    
+      <footer class="pie-pagina">
+        <div class="contenedor">
+          <p class="logo">KamiKōbō</p>
+          <p>Panel de administración</p>
+          <p>Catálogo · Compras · Ventas · Devoluciones</p>
+          <div class="pie-sesion">
+            <span>Sesión: Ana López / Administrador</span>
+            <span>Sistema de gestión comercial</span>
+          </div>
+        </div>
+      </footer>
+    </section>
+
+  </main>
+
+  <!-- PIE DE PÁGINA (idéntico en todas las páginas) -->
+  <footer class="pie-pagina">
+    <div class="contenedor">
+      <p class="logo">KamiKōbō</p>
+      <p>Panel de administración</p>
+      <p>Catálogo · Compras · Ventas · Devoluciones</p>
+      <div class="pie-sesion">
+        <span>Sesión: Ana López / Administrador</span>
+        <span>Sistema de gestión comercial</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js" defer></script>
+  <script src="../js/usuarios/usuarios.js" defer></script>
+  <script src="../js/usuarios/usuariosSQL.js" defer></script>
+</body>
+</html>

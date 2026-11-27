@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Mi cuenta · KamiKōbō</title>
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/componentes.css">
+  <link rel="stylesheet" href="../css/interacciones.css">
+  <link rel="stylesheet" href="../css/paginas/perfil.css">
+</head>
+<!-- Cambiar a data-rol="operador" para probar el rol Operador -->
+<body data-rol="admin">
+
+  <!-- ENCABEZADO (idéntico en todas las páginas; luego puede extraerse a un componente) -->
+  <header class="encabezado">
+    <div class="contenedor">
+      <a class="boton-menu" href="#menu" aria-label="Abrir menú">☰</a>
+      <a class="logo" href="dashboard.html">KamiKōbō</a>
+      <input class="buscador" type="search" placeholder="Buscar en el sistema…" aria-label="Buscar en el sistema">
+      <div class="zona-usuario">
+        <a class="icono-usuario" href="#menu-usuario" aria-label="Menú de usuario">👤</a>
+        <nav class="menu-usuario oculto" id="menu-usuario">
+          <a href="perfil.html">Ver perfil</a>
+          <a class="enlace-peligro" href="login.html">Cerrar sesión</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- MENÚ LATERAL (se abre con :target; cierra con href="#cerrar") -->
+  <div class="fondo-oscuro oculto" id="menu">
+    <nav class="menu-lateral">
+      <div class="menu-cabecera"><strong>NAVEGACIÓN</strong><a class="modal-cerrar" href="#cerrar" aria-label="Cerrar menú">✕</a></div>
+      <a href="ventas.html">Punto de venta</a>
+      <a href="inventario.html">Inventario</a>
+      <a href="compras.html" data-rol="admin">Compras</a>
+      <a href="devoluciones.html">Devoluciones</a>
+      <a href="historial.html" data-rol="admin">Historial y Consultas</a>
+      <a href="reportes.html" data-rol="admin">Reportes</a>
+      <a href="usuarios.html" data-rol="admin">Usuarios y Roles</a>
+      <a href="cierre-caja.html" data-rol="admin">Cierre de caja</a>
+      <hr class="menu-separador">
+      <p class="texto-ayuda">Panel de administración</p>
+    </nav>
+  </div>
+
+  <main class="contenedor contenido">
+    <p class="ruta-navegacion">KamiKōbō / MI CUENTA</p>
+    <div class="encabezado-pagina">
+      <div>
+        <h1 class="titulo-pagina">Ver perfil</h1>
+        <p class="subtitulo-pagina">Consulta tus datos, permisos y opciones de seguridad.</p>
+      </div>
+      
+    </div>
+
+    <div class="rejilla-perfil">
+      <aside class="tarjeta tarjeta-rosa perfil-lateral">
+        <span class="avatar" aria-hidden="true">👤</span>
+        <h2 class="tarjeta-titulo"><span data-rol="admin">Ana López</span><span data-rol="operador">Luis Pérez</span></h2>
+        <p><span class="insignia"><span data-rol="admin">Administrador</span><span data-rol="operador">Operador</span></span></p>
+        <p class="texto-exito">Sesión activa</p>
+        <p class="producto-nombre">KamiKōbō</p>
+        <p class="texto-ayuda">Panel de administración</p>
+        <div class="perfil-acceso">
+          <p><strong>Acceso al sistema</strong></p>
+          <p data-rol="admin">Tu rol permite administrar las operaciones y consultar los reportes del negocio.</p>
+          <p data-rol="operador">Tu rol permite realizar ventas, registrar devoluciones y consultar el catálogo.</p>
+        </div>
+        <a class="boton-secundario boton-ancho" href="login.html">Cerrar sesión</a>
+      </aside>
+
+      <div class="columna">
+        <section class="tarjeta">
+          <h2 class="tarjeta-titulo">Información de la cuenta</h2>
+          <!-- BACKEND: datos del usuario en sesión -->
+          <div class="rejilla-formulario">
+            <div><p class="texto-ayuda">Nombre</p><p><strong><span data-rol="admin">Ana López</span><span data-rol="operador">Luis Pérez</span></strong></p></div>
+            <div><p class="texto-ayuda">Rol</p><p><strong><span data-rol="admin">Administrador</span><span data-rol="operador">Operador</span></strong></p>
+              <p class="texto-ayuda estado-cuenta">Estado de la cuenta</p><p><strong>Activa</strong></p></div>
+          </div>
+        </section>
+
+        <section class="tarjeta">
+          <h2 class="tarjeta-titulo">Módulos autorizados</h2>
+          <p class="texto-ayuda">Acceso según el rol asignado a esta cuenta.</p>
+          <ul class="lista-modulos" data-rol="admin"><li>✓ Catálogo e inventario</li><li>✓ Compras y ventas</li><li>✓ Devoluciones</li><li>✓ Reportes y cierre de caja</li><li>✓ Usuarios y roles</li><li>✓ Historial y consultas</li></ul>
+          <ul class="lista-modulos" data-rol="operador"><li>✓ Punto de venta</li><li>✓ Devoluciones</li><li>✓ Inventario (solo consulta)</li></ul>
+        </section>
+
+        <section class="tarjeta tarjeta-seguridad">
+          <div>
+            <h2 class="tarjeta-titulo">Seguridad</h2>
+            <p class="texto-ayuda">Administra el acceso a tu cuenta.</p>
+          </div>
+          <a class="boton-secundario" href="#cerrar">Cambiar contraseña</a>
+        </section>
+      </div>
+    </div>
+
+    <div class="encabezado-pagina separador-boton">
+      <a class="boton-secundario" href="dashboard.html">Volver al inicio</a>
+      <a class="boton" href="#cerrar">Editar perfil</a>
+    </div>
+  </main>
+
+  <!-- PIE DE PÁGINA (idéntico en todas las páginas) -->
+  <footer class="pie-pagina">
+    <div class="contenedor">
+      <p class="logo">KamiKōbō</p>
+      <p>Panel de administración</p>
+      <p>Catálogo · Compras · Ventas · Devoluciones</p>
+      <div class="pie-sesion">
+        <span>Sesión: Ana López / Administrador</span>
+        <span>Sistema de gestión comercial</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js" defer></script>
+</body>
+</html>

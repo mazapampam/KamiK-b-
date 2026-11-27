@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Punto de venta · KamiKōbō</title>
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/componentes.css">
+  <link rel="stylesheet" href="../css/interacciones.css">
+  <link rel="stylesheet" href="../css/paginas/ventas.css">
+</head>
+<!-- Cambiar a data-rol="operador" para probar el rol Operador -->
+<body data-rol="admin">
+
+  <!-- ENCABEZADO (idéntico en todas las páginas; luego puede extraerse a un componente) -->
+  <header class="encabezado encabezado-simple">
+    <div class="contenedor">
+      <a class="boton-menu" href="#menu" aria-label="Abrir menú">☰</a>
+      <a class="logo" href="dashboard.html">KamiKōbō</a>
+      <div class="zona-usuario">
+        <a class="icono-usuario" href="#menu-usuario" aria-label="Menú de usuario">👤</a>
+        <nav class="menu-usuario oculto" id="menu-usuario">
+          <a href="perfil.html">Ver perfil</a>
+          <a class="enlace-peligro" href="login.html">Cerrar sesión</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- MENÚ LATERAL (se abre con :target; cierra con href="#cerrar") -->
+  <div class="fondo-oscuro oculto" id="menu">
+    <nav class="menu-lateral">
+      <div class="menu-cabecera"><strong>NAVEGACIÓN</strong><a class="modal-cerrar" href="#cerrar" aria-label="Cerrar menú">✕</a></div>
+      <a href="ventas.html">Punto de venta</a>
+      <a href="inventario.html">Inventario</a>
+      <a href="compras.html" data-rol="admin">Compras</a>
+      <a href="devoluciones.html">Devoluciones</a>
+      <a href="historial.html" data-rol="admin">Historial y Consultas</a>
+      <a href="reportes.html" data-rol="admin">Reportes</a>
+      <a href="usuarios.html" data-rol="admin">Usuarios y Roles</a>
+      <a href="cierre-caja.html" data-rol="admin">Cierre de caja</a>
+      <hr class="menu-separador">
+      <p class="texto-ayuda">Panel de administración</p>
+    </nav>
+  </div>
+
+  <main class="contenedor contenido">
+    <p class="ruta-navegacion">KamiKōbō / VENTAS</p>
+    <div class="encabezado-pagina">
+      <div>
+        <h1 class="titulo-pagina">Punto de venta</h1>
+        <p class="subtitulo-pagina">Escanea o escribe un código de barras. Solo productos registrados y activos.</p>
+      </div>
+      
+    </div>
+
+    <div class="rejilla-con-panel">
+      <section>
+        <div class="caja-rosa">
+          <label class="etiqueta" for="codigo-barras">Código de barras · escáner o captura manual</label>
+          <input class="entrada" type="text" id="codigo-barras" name="codigo_barras" value="7501234567893">
+        </div>
+        <div class="grupo-botones-venta">
+          <a class="boton-secundario" href="#modal-codigo">Código manual</a>
+          <a class="boton-secundario" href="#modal-codigo">Simular lectura</a>
+        </div>
+
+        <h2 class="seccion-titulo">Artículos</h2>
+        <!-- BACKEND: producto encontrado por código de barras -->
+        <div class="tabla-contenedor">
+          <table class="tabla">
+            <thead><tr><th>Producto</th><th class="texto-derecha">Precio de venta</th></tr></thead>
+            <tbody>
+          <tr>
+            <td>
+              <div class="fila">
+                <!-- IMG: miniatura del producto (assets/img/sakura-primavera.jpg) -->
+                <img class="miniatura-producto" src="../assets/img/sakura-primavera.jpg" alt="Sakura · edición primavera">
+                <div>
+                  <p class="producto-nombre">Sakura · edición primavera</p>
+                  <p class="producto-meta">FIG-001 · Activo · Agregar al carrito ↘</p>
+                  <p class="producto-meta">Disponibles: <strong>12</strong></p>
+                </div>
+              </div>
+            </td>
+            <td class="texto-derecha producto-precio" data-id="FIG-001">$850.00</td>
+          </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Casos de demostración (PDF p.23): cada botón abre una ventana de error sin modificar nada -->
+        <div class="caja-rosa panel-validaciones">
+          <h2 class="panel-titulo">Probar validaciones · Corte III</h2>
+          <p class="texto-ayuda">Casos de demostración sin registrar una venta ni modificar existencias.</p>
+          <div class="grupo-validaciones">
+            <a class="boton-secundario" href="#error-codigo">Código inválido</a>
+            <a class="boton-secundario" href="#error-inactivo">Producto inactivo</a>
+            <a class="boton-secundario" href="#error-existencias">Sin existencias</a>
+            <a class="boton-secundario" href="#error-cantidad">Cantidad excesiva</a>
+          </div>
+          <p class="texto-ayuda">Cantidades enteras de 1 a las existencias disponibles. <a class="boton-enlace" href="#error-carrito-vacio">Carrito vacío ↘</a></p>
+        </div>
+      </section>
+
+      <!-- ESTADO CON ARTÍCULOS (visible por defecto) -->
+      <aside class="panel-lateral">
+        <h2 class="panel-titulo">Detalle de la venta</h2>
+        <p class="texto-ayuda">1 artículo</p>
+        <!-- BACKEND: líneas del carrito (una .linea-venta por producto) -->
+        <div class="linea-venta" data-id="FIG-001">
+          <div class="linea-venta-cabecera">
+            <strong>Sakura · primavera</strong>
+            <a class="boton-enlace" href="#cerrar" aria-label="Quitar Sakura · primavera del carrito">Quitar</a>
+          </div>
+          <p class="texto-ayuda">Precio unitario: $850.00</p>
+          <div class="control-cantidad">
+            <button class="boton-secundario boton-cantidad" type="button" aria-label="Disminuir cantidad">−</button>
+            <a class="cantidad-actual" href="#modal-cantidad" aria-label="Modificar cantidad">1</a>
+            <button class="boton-secundario boton-cantidad" type="button" aria-label="Aumentar cantidad">+</button>
+          </div>
+          <div class="linea-dato"><span class="texto-ayuda">Importe MXN</span><strong>850.00</strong></div>
+        </div>
+        <div class="total-venta"><span>Total</span><span class="total-venta-importe">850.00</span></div>
+        <div class="alerta alerta-informacion"><p class="alerta-titulo">Inventario sin cambios</p>Agregar o cambiar cantidades no descuenta existencias. El descuento ocurre al confirmar la venta.</div>
+        <a class="boton boton-ancho" href="#modal-pago">REVISAR VENTA</a>
+        <p class="texto-ayuda">MXN · IVA 16% incluido</p>
+      </aside>
+
+      <!-- ESTADO CARRITO VACÍO: el JS quita .oculto de este panel y oculta el otro -->
+      <aside class="panel-lateral oculto">
+        <h2 class="panel-titulo">Detalle de la venta</h2>
+        <p class="texto-ayuda">0 artículos</p>
+        <p class="mensaje-vacio">Tu carrito está vacío.<br>Agrega un producto activo para continuar.</p>
+        <div class="total-venta"><span>Total</span><span class="total-venta-importe">0.00</span></div>
+        <div class="alerta alerta-informacion"><p class="alerta-titulo">Sin productos</p>Agregar o cambiar cantidades no descuenta existencias. El descuento ocurre al confirmar la venta.</div>
+        <button class="boton boton-ancho deshabilitado" type="button" disabled>CONFIRMAR VENTA</button>
+        <p class="texto-ayuda">MXN · IVA 16% incluido</p>
+      </aside>
+
+    </div>
+
+    <!-- ===== MODAL: Confirmar pago ===== -->
+    <section class="modal oculto" id="modal-pago" aria-label="Confirmar pago">
+      <div class="modal-contenido">
+        <div class="modal-cabecera">
+          <h2 class="modal-titulo">Confirmar pago</h2>
+          <a class="modal-cerrar" href="#cerrar" aria-label="Cerrar">✕</a>
+        </div>
+        <p class="texto-ayuda">Revisa el importe y confirma que recibiste el pago.</p>
+        <div class="caja-rosa resumen-pago">
+          <p class="producto-nombre">Sakura · edición primavera</p>
+          <div class="linea-dato"><span class="texto-ayuda">Precio unitario $850.00 · Cantidad:</span><span>1</span></div>
+          <div class="total-venta"><span>Total a cobrar</span><span class="total-venta-importe">850.00</span></div>
+        </div>
+        <div class="alerta alerta-error">Al confirmar: registrar venta y descontar la cantidad vendida.</div>
+        <div class="modal-acciones">
+          <a class="boton-secundario" href="#cerrar">Cancelar</a>
+          <a class="boton" href="#venta-confirmada">Confirmar pago</a>
+        </div>
+        <p class="texto-ayuda">IVA 16% incluido. Cancelar no modifica inventario.</p>
+      </div>
+    </section>
+
+
+    <!-- ===== MODAL: Código de barras (PDF p.26) ===== -->
+    <section class="modal oculto" id="modal-codigo" aria-label="Código de barras">
+      <div class="modal-contenido">
+        <div class="modal-cabecera">
+          <div><h2 class="modal-titulo">Código de barras</h2><p class="texto-ayuda">Captura manual · Ejemplo interactivo</p></div>
+          <a class="modal-cerrar" href="#cerrar" aria-label="Cerrar">✕</a>
+        </div>
+        <div class="caja-rosa resumen-pago"><strong>7501234567893</strong></div>
+        <!-- BACKEND: producto encontrado por el código -->
+        <p>Sakura · edición primavera<br>Registrado · Activo · $850.00 MXN · 12 disponibles</p>
+        <div class="modal-acciones">
+          <a class="boton-secundario" href="#cerrar">Cancelar</a>
+          <a class="boton" href="#cerrar">Agregar al carrito</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== MODAL: Modificar cantidad (PDF p.26) ===== -->
+    <section class="modal oculto" id="modal-cantidad" aria-label="Modificar cantidad">
+      <div class="modal-contenido">
+        <div class="modal-cabecera">
+          <h2 class="modal-titulo">Modificar cantidad</h2>
+          <a class="modal-cerrar" href="#cerrar" aria-label="Cerrar">✕</a>
+        </div>
+        <p>Sakura · 12 unidades disponibles<br>Solo cantidades enteras de 1 a 12.</p>
+        <p class="texto-ayuda">Selecciona un caso de ejemplo para revisar la validación.</p>
+        <div class="modal-acciones">
+          <a class="boton" href="#cerrar">Aplicar 2 unidades</a>
+          <a class="boton" href="#error-cantidad">Probar 13 · excede stock</a>
+          <a class="boton-secundario" href="#cerrar">Cancelar</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== MODALES de error (PDF p.31-32). No cambian ventas ni inventario ===== -->
+    <section class="modal oculto" id="error-codigo" aria-label="Código de barras inválido" role="alertdialog">
+      <div class="modal-contenido">
+        <h2 class="modal-titulo titulo-error">Código de barras inválido</h2>
+        <p class="texto-modal">El código no está registrado o tiene un formato inválido. Verifica el código y vuelve a intentar.</p>
+        <p class="texto-ayuda">No se registró ninguna venta ni se modificó inventario.</p>
+        <div class="modal-acciones">
+          <a class="boton" href="#cerrar">Volver y corregir</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="modal oculto" id="error-inactivo" aria-label="Producto inactivo" role="alertdialog">
+      <div class="modal-contenido">
+        <h2 class="modal-titulo titulo-error">Producto inactivo</h2>
+        <p class="texto-modal">El producto está registrado, pero está desactivado. No puede agregarse a una venta.</p>
+        <p class="texto-ayuda">No se registró ninguna venta ni se modificó inventario.</p>
+        <div class="modal-acciones">
+          <a class="boton" href="#cerrar">Volver y corregir</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="modal oculto" id="error-existencias" aria-label="Existencias insuficientes" role="alertdialog">
+      <div class="modal-contenido">
+        <h2 class="modal-titulo titulo-error">Existencias insuficientes</h2>
+        <p class="texto-modal">El producto no tiene unidades disponibles. No se agregó al carrito.</p>
+        <p class="texto-ayuda">No se registró ninguna venta ni se modificó inventario.</p>
+        <div class="modal-acciones">
+          <a class="boton" href="#cerrar">Volver y corregir</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="modal oculto" id="error-cantidad" aria-label="Cantidad no permitida" role="alertdialog">
+      <div class="modal-contenido">
+        <h2 class="modal-titulo titulo-error">Cantidad no permitida</h2>
+        <p class="texto-modal">La cantidad debe ser un entero mayor que cero y no superar las existencias disponibles.</p>
+        <p class="texto-ayuda">No se registró ninguna venta ni se modificó inventario.</p>
+        <div class="modal-acciones">
+          <a class="boton" href="#cerrar">Volver y corregir</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="modal oculto" id="error-carrito-vacio" aria-label="No puedes confirmar un carrito vacío" role="alertdialog">
+      <div class="modal-contenido">
+        <h2 class="modal-titulo titulo-error">No puedes confirmar un carrito vacío</h2>
+        <p class="texto-modal">Agrega al menos un producto registrado y activo antes de confirmar la venta.</p>
+        <p class="texto-ayuda">No se registró ninguna venta ni se modificó inventario.</p>
+        <div class="modal-acciones">
+          <a class="boton" href="#cerrar">Volver y corregir</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== VISTA: Venta confirmada ===== -->
+    <section class="vista oculto" id="venta-confirmada" aria-label="Venta confirmada">
+      <div class="contenedor contenido">
+        <p class="ruta-navegacion">KamiKōbō / VENTAS</p>
+        <h1 class="titulo-pagina">Venta confirmada</h1>
+        <!-- BACKEND: folio, fecha y usuario de la venta registrada -->
+        <p data-folio="V-000128"><strong>Folio V-000128 · 2026-11-23 14:35 · Ana López</strong></p>
+        <p class="subtitulo-pagina">La venta se registró y las existencias se descontaron una sola vez.</p>
+        <div class="resumen-venta">
+          <div class="linea-dato"><span>Sakura · Existencias después de la venta:</span><strong>11</strong></div>
+          <div class="total-venta"><span>Total cobrado MXN</span><span>850.00</span></div>
+        </div>
+        <div class="grupo-botones-venta">
+          <a class="boton" href="#ticket-venta">Ver ticket térmico</a>
+          <a class="boton" href="ventas.html">Nueva venta</a>
+          <a class="boton" href="devoluciones.html">Registrar devolución</a>
+        </div>
+      </div>
+    
+      <footer class="pie-pagina">
+        <div class="contenedor">
+          <p class="logo">KamiKōbō</p>
+          <p>Panel de administración</p>
+          <p>Catálogo · Compras · Ventas · Devoluciones</p>
+          <div class="pie-sesion">
+            <span>Sesión: Ana López / Administrador</span>
+            <span>Sistema de gestión comercial</span>
+          </div>
+        </div>
+      </footer>
+    </section>
+
+    <!-- ===== VISTA: Ticket de venta (80 mm, monocromático) ===== -->
+    <section class="vista oculto" id="ticket-venta" aria-label="Ticket de venta">
+      <div class="contenedor contenido">
+        <h1 class="titulo-pagina">Ticket de venta</h1>
+        <p class="subtitulo-pagina">Formato térmico · Papel de 80 mm · Monocromático · Importes en MXN</p>
+        <div class="fila fila-ticket">
+          <article class="ticket" data-folio="V-000128">
+            <p class="ticket-marca">KamiKōbō</p>
+            <p class="ticket-centrado">SISTEMA DE GESTIÓN COMERCIAL</p>
+            <p class="ticket-titulo">TICKET DE VENTA</p>
+            <p>Folio: V-000128<br>Fecha: 2026-11-23 · Hora: 14:35<br>Usuario: Ana López</p>
+            <hr class="ticket-separador">
+            <p><strong>PRODUCTO</strong><br>Sakura · edición primavera<br>ID interno: FIG-001<br>Código: 7501234567893</p>
+            <p>Cantidad: 1<br>Precio unitario (IVA incluido): $850.00</p>
+            <hr class="ticket-separador">
+            <div class="ticket-linea"><span>Subtotal MXN</span><span>732.76</span></div>
+            <div class="ticket-linea"><span>IVA 16% MXN</span><span>117.24</span></div>
+            <div class="ticket-total"><span>TOTAL MXN</span><span>850.00</span></div>
+            <p>Pago: efectivo</p>
+            <p class="ticket-centrado"><strong>Gracias por tu compra</strong><br>Conserva tu folio para devoluciones</p>
+          </article>
+          <div class="columna acciones-ticket">
+            <a class="boton" href="#venta-confirmada">Volver a la venta</a>
+            <a class="boton" href="ventas.html">Nueva venta</a>
+            <p class="texto-ayuda">Vista del comprobante de la venta confirmada.</p>
+          </div>
+        </div>
+      </div>
+    
+      <footer class="pie-pagina">
+        <div class="contenedor">
+          <p class="logo">KamiKōbō</p>
+          <p>Panel de administración</p>
+          <p>Catálogo · Compras · Ventas · Devoluciones</p>
+          <div class="pie-sesion">
+            <span>Sesión: Ana López / Administrador</span>
+            <span>Sistema de gestión comercial</span>
+          </div>
+        </div>
+      </footer>
+    </section>
+  </main>
+
+  <!-- PIE DE PÁGINA (idéntico en todas las páginas) -->
+  <footer class="pie-pagina">
+    <div class="contenedor">
+      <p class="logo">KamiKōbō</p>
+      <p>Panel de administración</p>
+      <p>Catálogo · Compras · Ventas · Devoluciones</p>
+      <div class="pie-sesion">
+        <span>Sesión: Ana López / Administrador</span>
+        <span>Sistema de gestión comercial</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js" defer></script>
+  <script src="../js/ventas/ventas.js" defer></script>
+  <script src="../js/ventas/ventasSQL.js" defer></script>
+</body>
+</html>

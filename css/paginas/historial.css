@@ -1,0 +1,9 @@
+/* ===== Historial: filtros ===== */
+.barra-filtros .campo-buscar { flex: 2.5; }
+.barra-filtros .campo-usuario { flex: 0 0 280px; }
+
+/* ===== Historial: panel de detalle (paleta rojo/rosa) ===== */
+.detalle-fecha { margin: 8px 0; }
+.linea-detalle { padding: 6px 0; }
+.panel-lateral .boton-ancho { margin: 14px 0 10px; }
+.panel-lateral .menu-separador { margin: 14px 0; }

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Iniciar sesión · KamiKōbō</title>
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/componentes.css">
+  <link rel="stylesheet" href="../css/interacciones.css">
+  <link rel="stylesheet" href="../css/paginas/login.css">
+</head>
+<body>
+  <main class="pagina-dividida">
+    <!-- IMG: ilustración de personaje de anime en tonos rosa/naranja (assets/img/login.jpg) -->
+    <section class="panel-imagen">
+      <div class="tarjeta tarjeta-marca">
+        <p class="logo logo-rojo">KamiKōbō</p>
+        <p class="texto-ayuda">Sistema de gestión comercial</p>
+      </div>
+    </section>
+
+    <section class="panel-formulario">
+      <form class="formulario" action="#" method="post">
+        <h1 class="titulo-pagina">Inicia sesión</h1>
+        <p class="subtitulo-pagina">Accede a tu espacio de gestión.</p>
+
+        <!-- Estado de error: el JS del equipo quita .oculto y agrega .error a los campos -->
+        <div class="alerta alerta-error oculto">No se pudo iniciar sesión. Revisa usuario, contraseña y estado de la cuenta.</div>
+
+        <div class="campo">
+          <label class="etiqueta" for="usuario">Usuario</label>
+          <input class="entrada" type="text" id="usuario" name="usuario" placeholder="Ingresa tu usuario…">
+          <p class="texto-error oculto">Usuario obligatorio.</p>
+        </div>
+        <div class="campo">
+          <label class="etiqueta" for="clave">Contraseña</label>
+          <input class="entrada" type="password" id="clave" name="clave" placeholder="Ingresa tu contraseña…">
+          <p class="texto-error oculto">Completa la contraseña.</p>
+        </div>
+
+        <button class="boton boton-ancho" type="submit">ACCEDER</button>
+        <p class="texto-ayuda pie-formulario">KamiKōbō · Panel de administración</p>
+      </form>
+    </section>
+  </main>
+  <script src="../js/main.js" defer></script>
+</body>
+</html>

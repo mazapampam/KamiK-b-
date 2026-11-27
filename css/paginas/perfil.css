@@ -1,0 +1,11 @@
+/* ===== Perfil: dos columnas (tarjeta lateral + tarjetas de información) ===== */
+.rejilla-perfil { display: grid; grid-template-columns: 300px 1fr; gap: 24px; align-items: stretch; }
+.perfil-lateral { display: flex; flex-direction: column; gap: 10px; }
+.perfil-acceso { margin: 24px 0; flex: 1; }
+.estado-cuenta { margin-top: 20px; }
+
+/* ===== Módulos autorizados (lista en 2 columnas) ===== */
+.lista-modulos { list-style: none; display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px 16px; margin-top: 12px; color: var(--color-exito); font-size: 13px; }
+
+/* ===== Seguridad ===== */
+.tarjeta-seguridad { display: flex; justify-content: space-between; align-items: center; }

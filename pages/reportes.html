@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Reportes · KamiKōbō</title>
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/componentes.css">
+  <link rel="stylesheet" href="../css/interacciones.css">
+  <link rel="stylesheet" href="../css/paginas/reportes.css">
+</head>
+<!-- Cambiar a data-rol="operador" para probar el rol Operador -->
+<body data-rol="admin">
+
+  <!-- ENCABEZADO (idéntico en todas las páginas; luego puede extraerse a un componente) -->
+  <header class="encabezado encabezado-simple">
+    <div class="contenedor">
+      <a class="boton-menu" href="#menu" aria-label="Abrir menú">☰</a>
+      <a class="logo" href="dashboard.html">KamiKōbō</a>
+      <div class="zona-usuario">
+        <a class="icono-usuario" href="#menu-usuario" aria-label="Menú de usuario">👤</a>
+        <nav class="menu-usuario oculto" id="menu-usuario">
+          <a href="perfil.html">Ver perfil</a>
+          <a class="enlace-peligro" href="login.html">Cerrar sesión</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- MENÚ LATERAL (se abre con :target; cierra con href="#cerrar") -->
+  <div class="fondo-oscuro oculto" id="menu">
+    <nav class="menu-lateral">
+      <div class="menu-cabecera"><strong>NAVEGACIÓN</strong><a class="modal-cerrar" href="#cerrar" aria-label="Cerrar menú">✕</a></div>
+      <a href="ventas.html">Punto de venta</a>
+      <a href="inventario.html">Inventario</a>
+      <a href="compras.html" data-rol="admin">Compras</a>
+      <a href="devoluciones.html">Devoluciones</a>
+      <a href="historial.html" data-rol="admin">Historial y Consultas</a>
+      <a href="reportes.html" data-rol="admin">Reportes</a>
+      <a href="usuarios.html" data-rol="admin">Usuarios y Roles</a>
+      <a href="cierre-caja.html" data-rol="admin">Cierre de caja</a>
+      <hr class="menu-separador">
+      <p class="texto-ayuda">Panel de administración</p>
+    </nav>
+  </div>
+
+  <main class="contenedor contenido">
+    <p class="ruta-navegacion">KamiKōbō / REPORTES</p>
+    <div class="encabezado-pagina">
+      <div>
+        <h1 class="titulo-pagina">Reportes</h1>
+        <p class="subtitulo-pagina no-imprimir">Consulta resultados, exporta CSV e imprime tus reportes.</p>
+      </div>
+      
+    </div>
+
+    <!-- Pestañas: el JS del equipo quita .oculto del panel elegido y mueve .activo a la pestaña -->
+    <nav class="pestanas no-imprimir" aria-label="Tipos de reporte">
+      <a class="pestana activo" href="#cerrar" data-panel="inventario">Inventario actual</a>
+      <a class="pestana" href="#cerrar" data-panel="ventas">Ventas por rango</a>
+      <a class="pestana" href="#cerrar" data-panel="detalle">Detalle de ventas</a>
+      <a class="pestana" href="#cerrar" data-panel="compras">Compras por rango</a>
+      <a class="pestana" href="#cerrar" data-panel="devoluciones">Devoluciones</a>
+      <a class="pestana" href="#cerrar" data-panel="usuario">Mov. por usuario</a>
+    </nav>
+
+      <!-- Panel: Inventario actual (el JS del equipo cambia .oculto al hacer clic en la pestaña) -->
+      <section class="panel-pestana" id="panel-inventario" data-panel="inventario">
+        <form class="barra-filtros no-imprimir" action="#" method="get">
+          <div class="campo campo-buscar"><label class="etiqueta" for="codigo-rep">Código o nombre</label><input class="entrada" type="search" id="codigo-rep" placeholder="Buscar producto o código…"></div>
+          <div class="campo"><label class="etiqueta" for="estado-rep">Estado</label><select class="selector" id="estado-rep"><option>Activos</option><option>Inactivos</option><option>Todos</option></select></div>
+          <button class="boton" type="submit">Aplicar filtros</button>
+        </form>
+        <div class="rejilla-kpis no-imprimir">
+          <div class="indicador indicador-columna indicador-destacado"><span class="indicador-texto">Productos listados</span><span class="indicador-numero">8</span></div>
+          <div class="indicador indicador-columna"><span class="indicador-texto">Suma de existencias</span><span class="indicador-numero">76</span></div>
+          <div class="indicador indicador-columna"><span class="indicador-texto">Productos agotados</span><span class="indicador-numero">2</span></div>
+        </div>
+
+        <!-- Cabecera solo para impresión (A4 / Carta) -->
+        <div class="solo-impresion cabecera-impresion">
+          <p class="logo logo-rojo">KamiKōbō</p>
+          <p class="texto-ayuda">Sistema de gestión comercial</p>
+          <hr class="linea-roja">
+          <h2 class="titulo-impresion">Inventario actual</h2>
+          <p>Estado: activos</p>
+          <p>Código / nombre: todos</p>
+          <p class="texto-ayuda">Generado: 2026-11-23 13:00</p>
+        </div>
+
+        <div class="encabezado-pagina no-imprimir">
+          <h2 class="seccion-titulo">Inventario actual</h2>
+          <div class="grupo-acciones">
+            <a class="boton-secundario" href="#cerrar">Exportar CSV</a>
+            <a class="boton" href="#cerrar">Imprimir reporte</a>
+          </div>
+        </div>
+        <p class="texto-ayuda no-imprimir"><span class="logo logo-rojo">KamiKōbō</span> &nbsp; Estado: activos · Código / nombre: todos · Generado: 2026-11-23 13:00</p>
+
+        <!-- BACKEND: filas del reporte según los filtros -->
+        <div class="tabla-contenedor">
+          <table class="tabla">
+            <thead><tr><th>Código</th><th>Nombre</th><th class="texto-derecha">Precio</th><th class="texto-derecha">Existencia</th><th>Estado</th></tr></thead>
+            <tbody>
+          <tr><td>FIG-001</td><td>Sakura · edición primavera</td><td class="texto-derecha">$850.00</td><td class="texto-derecha">12</td><td>Activo</td></tr>
+          <tr class="fila-alterna"><td>FIG-002</td><td>Ninja articulado</td><td class="texto-derecha">$640.00</td><td class="texto-derecha">8</td><td>Activo</td></tr>
+          <tr><td>FIG-003</td><td>Pequeño aventurero</td><td class="texto-derecha">$320.00</td><td class="texto-derecha">0</td><td>Activo</td></tr>
+          <tr class="fila-alterna"><td>FIG-004</td><td>Guardiana 1/7</td><td class="texto-derecha">$1,450.00</td><td class="texto-derecha">5</td><td>Activo</td></tr>
+              <tr class="fila-total"><td colspan="4">8 productos listados · Total del filtro</td><td class="texto-derecha texto-principal">76 unidades</td></tr>
+            </tbody>
+          </table>
+        </div>
+        
+        <div class="tabla-pie">
+          <span class="firma">Responsable: Ana López · Vo. Bo. ____________________</span>
+          <span>1–4 de 8 · Página 1 de 2</span>
+        </div>
+
+        <!-- Firma y número de página: solo impresión -->
+        <div class="solo-impresion">
+          <p class="firma-responsable">Responsable: Ana López · Administrador</p>
+          <hr class="linea-firma">
+          <p class="firma">Firma / Vo. Bo.</p>
+          <p class="pie-impresion"><span>KamiKōbō · Inventario actual</span><span>Página 1 de 1</span></p>
+        </div>
+
+        <div class="nota-formato no-imprimir">
+          CSV: todos los resultados filtrados · UTF-8 con BOM · separador coma · encabezados de columna<br>
+          Fechas AAAA-MM-DD HH:MM · importes con 2 decimales, sin símbolo monetario · Impresión A4 o Carta
+        </div>
+      </section>
+      <!-- Panel: Ventas por rango (el JS del equipo cambia .oculto al hacer clic en la pestaña) -->
+      <section class="panel-pestana oculto" id="panel-ventas" data-panel="ventas">
+        <form class="barra-filtros no-imprimir" action="#" method="get">
+          <div class="campo"><label class="etiqueta" for="desde-v">Desde</label><input class="entrada" type="text" id="desde-v" value="2026-11-23"></div>
+          <div class="campo"><label class="etiqueta" for="hasta-v">Hasta</label><input class="entrada" type="text" id="hasta-v" value="2026-11-23"></div>
+          <div class="campo"><label class="etiqueta" for="usr-v">Usuario / cajero</label><select class="selector" id="usr-v"><option>Todos</option></select></div>
+          <div class="campo"><span class="etiqueta">Periodo</span><div class="grupo-opciones"><a class="opcion activo" href="#cerrar">Diario</a><a class="opcion" href="#cerrar">Semanal</a><a class="opcion" href="#cerrar">Mensual</a></div></div>
+          <button class="boton" type="submit">Aplicar filtros</button>
+        </form>
+        <div class="rejilla-kpis no-imprimir">
+          <div class="indicador indicador-columna indicador-destacado"><span class="indicador-texto">Total facturado</span><span class="indicador-numero">$4,000.00</span></div>
+          <div class="indicador indicador-columna"><span class="indicador-texto">Tickets emitidos</span><span class="indicador-numero">4</span></div>
+          <div class="indicador indicador-columna"><span class="indicador-texto">Ticket promedio</span><span class="indicador-numero">$1,000.00</span></div>
+        </div>
+
+        <!-- Cabecera solo para impresión (A4 / Carta) -->
+        <div class="solo-impresion cabecera-impresion">
+          <p class="logo logo-rojo">KamiKōbō</p>
+          <p class="texto-ayuda">Sistema de gestión comercial</p>
+          <hr class="linea-roja">
+          <h2 class="titulo-impresion">Ventas por rango</h2>
+          <p>Periodo: 2026-11-23 a 2026-11-23</p>
+          <p>Cajero: todos los cajeros</p>
+          <p class="texto-ayuda">Generado: 2026-11-23 13:00</p>
+        </div>
+
+        <div class="encabezado-pagina no-imprimir">
+          <h2 class="seccion-titulo">Ventas por rango</h2>
+          <div class="grupo-acciones">
+            <a class="boton-secundario" href="#cerrar">Exportar CSV</a>
+            <a class="boton" href="#cerrar">Imprimir reporte</a>
+          </div>
+        </div>
+        <p class="texto-ayuda no-imprimir"><span class="logo logo-rojo">KamiKōbō</span> &nbsp; 2026-11-23 a 2026-11-23 · Todos los cajeros · Generado: 2026-11-23 13:00</p>
+
+        <!-- BACKEND: filas del reporte según los filtros -->
+        <div class="tabla-contenedor">
+          <table class="tabla">
+            <thead><tr><th>Folio</th><th>Fecha y hora</th><th>Cajero</th><th class="texto-derecha">Subtotal</th><th class="texto-derecha">IVA</th><th class="texto-derecha">Total</th></tr></thead>
+            <tbody>
+          <tr data-folio="VTA-2026-0321"><td>VTA-2026-0321</td><td>2026-11-23 12:40</td><td>Ana López</td><td class="texto-derecha">$1,000.00</td><td class="texto-derecha">$0.00</td><td class="texto-derecha">$1,000.00</td></tr>
+          <tr class="fila-alterna" data-folio="VTA-2026-0320"><td>VTA-2026-0320</td><td>2026-11-23 11:20</td><td>Luis Pérez</td><td class="texto-derecha">$1,250.00</td><td class="texto-derecha">$0.00</td><td class="texto-derecha">$1,250.00</td></tr>
+          <tr data-folio="VTA-2026-0319"><td>VTA-2026-0319</td><td>2026-11-23 10:35</td><td>Ana López</td><td class="texto-derecha">$750.00</td><td class="texto-derecha">$0.00</td><td class="texto-derecha">$750.00</td></tr>
+          <tr class="fila-alterna" data-folio="VTA-2026-0318"><td>VTA-2026-0318</td><td>2026-11-23 09:10</td><td>Luis Pérez</td><td class="texto-derecha">$1,000.00</td><td class="texto-derecha">$0.00</td><td class="texto-derecha">$1,000.00</td></tr>
+              <tr class="fila-total"><td colspan="3">Total · 4 tickets</td><td class="texto-derecha">$4,000.00</td><td class="texto-derecha">$0.00</td><td class="texto-derecha texto-principal">$4,000.00</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="solo-impresion resumen-impresion"><span>4 tickets emitidos</span><span>Ticket promedio: $1,000.00</span></p>
+        <div class="tabla-pie">
+          <span class="firma">Responsable: Ana López · Vo. Bo. ____________________</span>
+          <span>4 registros · Página 1 de 1</span>
+        </div>
+
+        <!-- Firma y número de página: solo impresión -->
+        <div class="solo-impresion">
+          <p class="firma-responsable">Responsable: Ana López · Administrador</p>
+          <hr class="linea-firma">
+          <p class="firma">Firma / Vo. Bo.</p>
+          <p class="pie-impresion"><span>KamiKōbō · Ventas por rango</span><span>Página 1 de 1</span></p>
+        </div>
+
+        <div class="nota-formato no-imprimir">
+          CSV: todos los resultados filtrados · UTF-8 con BOM · separador coma · encabezados de columna<br>
+          Fechas AAAA-MM-DD HH:MM · importes con 2 decimales, sin símbolo monetario · Impresión A4 o Carta
+        </div>
+      </section>
+      <!-- Panel: Detalle de ventas (el JS del equipo cambia .oculto al hacer clic en la pestaña) -->
+      <section class="panel-pestana oculto" id="panel-detalle" data-panel="detalle">
+        <form class="barra-filtros no-imprimir" action="#" method="get">
+          <div class="campo"><label class="etiqueta" for="desde-d">Desde</label><input class="entrada" type="text" id="desde-d" value="2026-11-23"></div>
+          <div class="campo"><label class="etiqueta" for="hasta-d">Hasta</label><input class="entrada" type="text" id="hasta-d" value="2026-11-23"></div>
+          <div class="campo"><label class="etiqueta" for="usr-d">Usuario / cajero</label><select class="selector" id="usr-d"><option>Todos</option></select></div>
+          <div class="campo"><span class="etiqueta">Periodo</span><div class="grupo-opciones"><a class="opcion activo" href="#cerrar">Diario</a><a class="opcion" href="#cerrar">Semanal</a><a class="opcion" href="#cerrar">Mensual</a></div></div>
+          <button class="boton" type="submit">Aplicar filtros</button>
+        </form>
+        <div class="rejilla-kpis no-imprimir">
+          <div class="indicador indicador-columna indicador-destacado"><span class="indicador-texto">Importe acumulado</span><span class="indicador-numero">$4,000.00</span></div>
+          <div class="indicador indicador-columna"><span class="indicador-texto">Unidades vendidas</span><span class="indicador-numero">4</span></div>
+          <div class="indicador indicador-columna"><span class="indicador-texto">Tickets incluidos</span><span class="indicador-numero">4</span></div>
+        </div>
+
+        <!-- Cabecera solo para impresión (A4 / Carta) -->
+        <div class="solo-impresion cabecera-impresion">
+          <p class="logo logo-rojo">KamiKōbō</p>
+          <p class="texto-ayuda">Sistema de gestión comercial</p>
+          <hr class="linea-roja">
+          <h2 class="titulo-impresion">Detalle de ventas</h2>
+          <p>Periodo: 2026-11-23 a 2026-11-23</p>
+          <p>Cajero: todos los cajeros</p>
+          <p class="texto-ayuda">Generado: 2026-11-23 13:00</p>
+        </div>
+
+        <div class="encabezado-pagina no-imprimir">
+          <h2 class="seccion-titulo">Detalle de ventas</h2>
+          <div class="grupo-acciones">
+            <a class="boton-secundario" href="#cerrar">Exportar CSV</a>
+            <a class="boton" href="#cerrar">Imprimir reporte</a>
+          </div>
+        </div>
+        <p class="texto-ayuda no-imprimir"><span class="logo logo-rojo">KamiKōbō</span> &nbsp; 2026-11-23 a 2026-11-23 · Todos los cajeros · Generado: 2026-11-23 13:00</p>
+
+        <!-- BACKEND: filas del reporte según los filtros -->
+        <div class="tabla-contenedor">
+          <table class="tabla">
+            <thead><tr><th>Fecha y hora</th><th>Folio</th><th>Código</th><th>Nombre</th><th class="texto-derecha">Cant.</th><th class="texto-derecha">Precio unitario</th><th class="texto-derecha">Importe</th></tr></thead>
+            <tbody>
+          <tr><td>2026-11-23 12:40</td><td>VTA-2026-0321</td><td>FIG-009</td><td>Reze - lovers</td><td class="texto-derecha">1</td><td class="texto-derecha">$1,000.00</td><td class="texto-derecha">$1,000.00</td></tr>
+          <tr class="fila-alterna"><td>2026-11-23 11:20</td><td>VTA-2026-0320</td><td>FIG-010</td><td>Figura de colección</td><td class="texto-derecha">1</td><td class="texto-derecha">$1,250.00</td><td class="texto-derecha">$1,250.00</td></tr>
+          <tr><td>2026-11-23 10:35</td><td>VTA-2026-0319</td><td>FIG-011</td><td>Figura especial</td><td class="texto-derecha">1</td><td class="texto-derecha">$750.00</td><td class="texto-derecha">$750.00</td></tr>
+          <tr class="fila-alterna"><td>2026-11-23 09:10</td><td>VTA-2026-0318</td><td>FIG-009</td><td>Reze - lovers</td><td class="texto-derecha">1</td><td class="texto-derecha">$1,000.00</td><td class="texto-derecha">$1,000.00</td></tr>
+              <tr class="fila-total"><td colspan="6">4 unidades vendidas · 4 líneas de detalle</td><td class="texto-derecha texto-principal">$4,000.00</td></tr>
+            </tbody>
+          </table>
+        </div>
+        
+        <div class="tabla-pie">
+          <span class="firma">Responsable: Ana López · Vo. Bo. ____________________</span>
+          <span>4 registros · Página 1 de 1</span>
+        </div>
+
+        <!-- Firma y número de página: solo impresión -->
+        <div class="solo-impresion">
+          <p class="firma-responsable">Responsable: Ana López · Administrador</p>
+          <hr class="linea-firma">
+          <p class="firma">Firma / Vo. Bo.</p>
+          <p class="pie-impresion"><span>KamiKōbō · Detalle de ventas</span><span>Página 1 de 1</span></p>
+        </div>
+
+        <div class="nota-formato no-imprimir">
+          CSV: todos los resultados filtrados · UTF-8 con BOM · separador coma · encabezados de columna<br>
+          Fechas AAAA-MM-DD HH:MM · importes con 2 decimales, sin símbolo monetario · Impresión A4 o Carta
+        </div>
+      </section>
+      <!-- Panel: Compras por rango (el JS del equipo cambia .oculto al hacer clic en la pestaña) -->
+      <section class="panel-pestana oculto" id="panel-compras" data-panel="compras">
+        <form class="barra-filtros no-imprimir" action="#" method="get">
+          <div class="campo"><label class="etiqueta" for="desde-c">Desde</label><input class="entrada" type="text" id="desde-c" value="2026-11-23"></div>
+          <div class="campo"><label class="etiqueta" for="hasta-c">Hasta</label><input class="entrada" type="text" id="hasta-c" value="2026-11-23"></div>
+          <div class="campo"><label class="etiqueta" for="usr-c">Proveedor</label><select class="selector" id="usr-c"><option>Todos</option><option>Distribuidora Sakura</option></select></div>
+          <div class="campo"><span class="etiqueta">Periodo</span><div class="grupo-opciones"><a class="opcion activo" href="#cerrar">Diario</a><a class="opcion" href="#cerrar">Semanal</a><a class="opcion" href="#cerrar">Mensual</a></div></div>
+          <button class="boton" type="submit">Aplicar filtros</button>
+        </form>
+        <div class="rejilla-kpis no-imprimir">
+          <div class="indicador indicador-columna indicador-destacado"><span class="indicador-texto">Importe total comprado</span><span class="indicador-numero">$26,920.00</span></div>
+          <div class="indicador indicador-columna"><span class="indicador-texto">Compras confirmadas</span><span class="indicador-numero">4</span></div>
+          <div class="indicador indicador-columna"><span class="indicador-texto">Proveedores incluidos</span><span class="indicador-numero">1</span></div>
+        </div>
+
+        <!-- Cabecera solo para impresión (A4 / Carta) -->
+        <div class="solo-impresion cabecera-impresion">
+          <p class="logo logo-rojo">KamiKōbō</p>
+          <p class="texto-ayuda">Sistema de gestión comercial</p>
+          <hr class="linea-roja">
+          <h2 class="titulo-impresion">Compras por rango</h2>
+          <p>Periodo: 2026-11-23 a 2026-11-23</p>
+          <p>Proveedor: todos los proveedores</p>
+          <p class="texto-ayuda">Generado: 2026-11-23 13:00</p>
+        </div>
+
+        <div class="encabezado-pagina no-imprimir">
+          <h2 class="seccion-titulo">Compras por rango</h2>
+          <div class="grupo-acciones">
+            <a class="boton-secundario" href="#cerrar">Exportar CSV</a>
+            <a class="boton" href="#cerrar">Imprimir reporte</a>
+          </div>
+        </div>
+        <p class="texto-ayuda no-imprimir"><span class="logo logo-rojo">KamiKōbō</span> &nbsp; 2026-11-23 a 2026-11-23 · Todos los proveedores · Generado: 2026-11-23 13:00</p>
+
+        <!-- BACKEND: filas del reporte según los filtros -->
+        <div class="tabla-contenedor">
+          <table class="tabla">
+            <thead><tr><th>Folio</th><th>Fecha y hora</th><th>Proveedor</th><th class="texto-derecha">Total</th></tr></thead>
+            <tbody>
+          <tr data-folio="CMP-2026-0147"><td>CMP-2026-0147</td><td>2026-11-23 12:10</td><td>Distribuidora Sakura</td><td class="texto-derecha">$16,380.00</td></tr>
+          <tr class="fila-alterna" data-folio="CMP-2026-0146"><td>CMP-2026-0146</td><td>2026-11-23 11:05</td><td>Distribuidora Sakura</td><td class="texto-derecha">$6,400.00</td></tr>
+          <tr data-folio="CMP-2026-0145"><td>CMP-2026-0145</td><td>2026-11-23 10:20</td><td>Distribuidora Sakura</td><td class="texto-derecha">$2,940.00</td></tr>
+          <tr class="fila-alterna" data-folio="CMP-2026-0144"><td>CMP-2026-0144</td><td>2026-11-23 09:15</td><td>Distribuidora Sakura</td><td class="texto-derecha">$1,200.00</td></tr>
+              <tr class="fila-total"><td colspan="3">Total · 4 compras confirmadas</td><td class="texto-derecha texto-principal">$26,920.00</td></tr>
+            </tbody>
+          </table>
+        </div>
+        
+        <div class="tabla-pie">
+          <span class="firma">Responsable: Ana López · Vo. Bo. ____________________</span>
+          <span>4 registros · Página 1 de 1</span>
+        </div>
+
+        <!-- Firma y número de página: solo impresión -->
+        <div class="solo-impresion">
+          <p class="firma-responsable">Responsable: Ana López · Administrador</p>
+          <hr class="linea-firma">
+          <p class="firma">Firma / Vo. Bo.</p>
+          <p class="pie-impresion"><span>KamiKōbō · Compras por rango</span><span>Página 1 de 1</span></p>
+        </div>
+
+        <div class="nota-formato no-imprimir">
+          CSV: todos los resultados filtrados · UTF-8 con BOM · separador coma · encabezados de columna<br>
+          Fechas AAAA-MM-DD HH:MM · importes con 2 decimales, sin símbolo monetario · Impresión A4 o Carta
+        </div>
+      </section>
+      <!-- Panel: Devoluciones (el JS del equipo cambia .oculto al hacer clic en la pestaña) -->
+      <section class="panel-pestana oculto" id="panel-devoluciones" data-panel="devoluciones">
+        <form class="barra-filtros no-imprimir" action="#" method="get">
+          <div class="campo"><label class="etiqueta" for="desde-r">Desde</label><input class="entrada" type="text" id="desde-r" value="2026-11-23"></div>
+          <div class="campo"><label class="etiqueta" for="hasta-r">Hasta</label><input class="entrada" type="text" id="hasta-r" value="2026-11-23"></div>
+          <div class="campo"><label class="etiqueta" for="usr-r">Usuario / cajero</label><select class="selector" id="usr-r"><option>Todos</option></select></div>
+          <div class="campo"><span class="etiqueta">Periodo</span><div class="grupo-opciones"><a class="opcion activo" href="#cerrar">Diario</a><a class="opcion" href="#cerrar">Semanal</a><a class="opcion" href="#cerrar">Mensual</a></div></div>
+          <button class="boton" type="submit">Aplicar filtros</button>
+        </form>
+        <div class="rejilla-kpis no-imprimir">
+          <div class="indicador indicador-columna indicador-destacado"><span class="indicador-texto">Importe devuelto</span><span class="indicador-numero">$480.00</span></div>
+          <div class="indicador indicador-columna"><span class="indicador-texto">Devoluciones registradas</span><span class="indicador-numero">1</span></div>
+          <div class="indicador indicador-columna"><span class="indicador-texto">Unidades devueltas</span><span class="indicador-numero">1</span></div>
+        </div>
+
+        <!-- Cabecera solo para impresión (A4 / Carta) -->
+        <div class="solo-impresion cabecera-impresion">
+          <p class="logo logo-rojo">KamiKōbō</p>
+          <p class="texto-ayuda">Sistema de gestión comercial</p>
+          <hr class="linea-roja">
+          <h2 class="titulo-impresion">Devoluciones</h2>
+          <p>Periodo: 2026-11-23 a 2026-11-23</p>
+          <p>Usuario: todos los usuarios</p>
+          <p class="texto-ayuda">Generado: 2026-11-23 13:00</p>
+        </div>
+
+        <div class="encabezado-pagina no-imprimir">
+          <h2 class="seccion-titulo">Devoluciones</h2>
+          <div class="grupo-acciones">
+            <a class="boton-secundario" href="#cerrar">Exportar CSV</a>
+            <a class="boton" href="#cerrar">Imprimir reporte</a>
+          </div>
+        </div>
+        <p class="texto-ayuda no-imprimir"><span class="logo logo-rojo">KamiKōbō</span> &nbsp; 2026-11-23 a 2026-11-23 · Todos los usuarios · Generado: 2026-11-23 13:00</p>
+
+        <!-- BACKEND: filas del reporte según los filtros -->
+        <div class="tabla-contenedor">
+          <table class="tabla">
+            <thead><tr><th>Folio</th><th>Fecha y hora</th><th>Usuario</th><th>Motivo</th><th class="texto-derecha">Unidades</th><th class="texto-derecha">Importe</th></tr></thead>
+            <tbody>
+          <tr data-folio="DEV-2026-0028"><td>DEV-2026-0028</td><td>2026-11-23 12:55</td><td>Ana López</td><td>Empaque dañado</td><td class="texto-derecha">1</td><td class="texto-derecha">$480.00</td></tr>
+              <tr class="fila-total"><td colspan="5">Total · 1 devolución</td><td class="texto-derecha texto-principal">$480.00</td></tr>
+            </tbody>
+          </table>
+        </div>
+        
+        <div class="tabla-pie">
+          <span class="firma">Responsable: Ana López · Vo. Bo. ____________________</span>
+          <span>1 registro · Página 1 de 1</span>
+        </div>
+
+        <!-- Firma y número de página: solo impresión -->
+        <div class="solo-impresion">
+          <p class="firma-responsable">Responsable: Ana López · Administrador</p>
+          <hr class="linea-firma">
+          <p class="firma">Firma / Vo. Bo.</p>
+          <p class="pie-impresion"><span>KamiKōbō · Devoluciones</span><span>Página 1 de 1</span></p>
+        </div>
+
+        <div class="nota-formato no-imprimir">
+          CSV: todos los resultados filtrados · UTF-8 con BOM · separador coma · encabezados de columna<br>
+          Fechas AAAA-MM-DD HH:MM · importes con 2 decimales, sin símbolo monetario · Impresión A4 o Carta
+        </div>
+      </section>
+      <!-- Panel: Movimientos por usuario (el JS del equipo cambia .oculto al hacer clic en la pestaña) -->
+      <section class="panel-pestana oculto" id="panel-usuario" data-panel="usuario">
+        <form class="barra-filtros no-imprimir" action="#" method="get">
+          <div class="campo"><label class="etiqueta" for="desde-u">Desde</label><input class="entrada" type="text" id="desde-u" value="2026-11-23"></div>
+          <div class="campo"><label class="etiqueta" for="hasta-u">Hasta</label><input class="entrada" type="text" id="hasta-u" value="2026-11-23"></div>
+          <div class="campo"><label class="etiqueta" for="usr-u">Usuario / cajero</label><select class="selector" id="usr-u"><option>Ana López</option><option>Luis Pérez</option></select></div>
+          <div class="campo"><span class="etiqueta">Periodo</span><div class="grupo-opciones"><a class="opcion activo" href="#cerrar">Diario</a><a class="opcion" href="#cerrar">Semanal</a><a class="opcion" href="#cerrar">Mensual</a></div></div>
+          <button class="boton" type="submit">Aplicar filtros</button>
+        </form>
+        <div class="rejilla-kpis no-imprimir">
+          <div class="indicador indicador-columna indicador-destacado"><span class="indicador-texto">Ventas del usuario</span><span class="indicador-numero">$1,750.00</span></div>
+          <div class="indicador indicador-columna"><span class="indicador-texto">Compras del usuario</span><span class="indicador-numero">$26,920.00</span></div>
+          <div class="indicador indicador-columna"><span class="indicador-texto">Devoluciones del usuario</span><span class="indicador-numero">$480.00</span></div>
+        </div>
+
+        <!-- Cabecera solo para impresión (A4 / Carta) -->
+        <div class="solo-impresion cabecera-impresion">
+          <p class="logo logo-rojo">KamiKōbō</p>
+          <p class="texto-ayuda">Sistema de gestión comercial</p>
+          <hr class="linea-roja">
+          <h2 class="titulo-impresion">Movimientos por usuario</h2>
+          <p>Periodo: 2026-11-23 a 2026-11-23 · diario</p>
+          <p>Usuario: Ana López</p>
+          <p class="texto-ayuda">Generado: 2026-11-23 13:00</p>
+        </div>
+
+        <div class="encabezado-pagina no-imprimir">
+          <h2 class="seccion-titulo">Movimientos por usuario</h2>
+          <div class="grupo-acciones">
+            <a class="boton-secundario" href="#cerrar">Exportar CSV</a>
+            <a class="boton" href="#cerrar">Imprimir reporte</a>
+          </div>
+        </div>
+        <p class="texto-ayuda no-imprimir"><span class="logo logo-rojo">KamiKōbō</span> &nbsp; 2026-11-23 a 2026-11-23 · Ana López · Periodo diario · Generado: 2026-11-23 13:00</p>
+
+        <!-- BACKEND: filas del reporte según los filtros -->
+        <div class="tabla-contenedor">
+          <table class="tabla">
+            <thead><tr><th>Fecha y hora</th><th>Folio</th><th>Movimiento</th><th>Usuario</th><th class="texto-derecha">Unidades</th><th class="texto-derecha">Importe</th></tr></thead>
+            <tbody>
+          <tr><td>2026-11-23 12:55</td><td>DEV-2026-0028</td><td>Devolución</td><td>Ana López</td><td class="texto-derecha">1</td><td class="texto-derecha">$480.00</td></tr>
+          <tr class="fila-alterna"><td>2026-11-23 12:40</td><td>VTA-2026-0321</td><td>Venta</td><td>Ana López</td><td class="texto-derecha">1</td><td class="texto-derecha">$1,000.00</td></tr>
+          <tr><td>2026-11-23 12:10</td><td>CMP-2026-0147</td><td>Compra</td><td>Ana López</td><td class="texto-derecha">26</td><td class="texto-derecha">$16,380.00</td></tr>
+          <tr class="fila-alterna"><td>2026-11-23 10:35</td><td>VTA-2026-0319</td><td>Venta</td><td>Ana López</td><td class="texto-derecha">1</td><td class="texto-derecha">$750.00</td></tr>
+              <tr class="fila-total"><td colspan="5">7 movimientos · Ventas netas (ventas − devoluciones)</td><td class="texto-derecha texto-principal">$1,270.00</td></tr>
+            </tbody>
+          </table>
+        </div>
+        
+        <div class="tabla-pie">
+          <span class="firma">Responsable: Ana López · Vo. Bo. ____________________</span>
+          <span>1–4 de 7 · Página 1 de 2</span>
+        </div>
+
+        <!-- Firma y número de página: solo impresión -->
+        <div class="solo-impresion">
+          <p class="firma-responsable">Responsable: Ana López · Administrador</p>
+          <hr class="linea-firma">
+          <p class="firma">Firma / Vo. Bo.</p>
+          <p class="pie-impresion"><span>KamiKōbō · Movimientos por usuario</span><span>Página 1 de 1</span></p>
+        </div>
+
+        <div class="nota-formato no-imprimir">
+          CSV: todos los resultados filtrados · UTF-8 con BOM · separador coma · encabezados de columna<br>
+          Fechas AAAA-MM-DD HH:MM · importes con 2 decimales, sin símbolo monetario · Impresión A4 o Carta
+        </div>
+      </section>
+
+  </main>
+
+  <!-- PIE DE PÁGINA (idéntico en todas las páginas) -->
+  <footer class="pie-pagina">
+    <div class="contenedor">
+      <p class="logo">KamiKōbō</p>
+      <p>Panel de administración</p>
+      <p>Catálogo · Compras · Ventas · Devoluciones</p>
+      <div class="pie-sesion">
+        <span>Sesión: Ana López / Administrador</span>
+        <span>Sistema de gestión comercial</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+/* ===== Reportes: filtros y tabla en pantalla ===== */
+.barra-filtros .campo-buscar { flex: 3; }
+.panel-pestana .tabla-pie { margin-bottom: 8px; }
+
+/* ===== Reportes: bloques que solo existen al imprimir ===== */
+.pie-impresion { display: flex; justify-content: space-between; border-top: 1px solid var(--color-borde); margin-top: 32px; padding-top: 8px; font-size: 11px; color: var(--color-texto-suave); }
+.resumen-impresion { justify-content: space-between; margin-top: 16px; font-weight: 500; }
+
+/* ===== Impresión A4 / Carta (basada en la hoja "Reporte de ventas por rango") ===== */
+@media print {
+  @page { size: A4; margin: 18mm; }
+  body { font-size: 12pt; }
+  /* Se muestran solo los bloques para impresión */
+  .solo-impresion { display: block; }
+  .resumen-impresion, .pie-impresion { display: flex; }
+  /* Se oculta lo que no sirve en papel */
+  .ruta-navegacion, .titulo-pagina, .subtitulo-pagina { display: none; }
+  .contenedor { max-width: none; padding: 0; }
+  .contenido { padding: 0; }
+  /* Tabla: encabezado destacado, filas alternas, textos a la izquierda e importes a la derecha */
+  .tabla-contenedor { border: 0; border-radius: 0; }
+  .tabla th { background: #F3E8EB; color: var(--color-texto); }
+  .tabla td { padding: 8px 14px; }
+  .fila-alterna { background: #F8F5F6; }
+  .fila-total { background: #F3E8EB; }
+  .tabla-pie .firma { display: none; }
+  .firma-responsable { margin-top: 48px; }
+}

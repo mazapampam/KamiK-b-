@@ -1,0 +1,9 @@
+/* ===== Inventario: filtros ===== */
+.filtros-inventario { display: flex; gap: 16px; background: var(--color-rosa-claro); border-radius: 6px; padding: 10px 12px; margin-bottom: 12px; }
+.filtros-inventario .entrada { flex: 1; background: #FFFFFF; }
+.filtros-inventario .selector { width: 220px; }
+
+/* ===== Inventario: listado ===== */
+.titulo-listado { justify-content: space-between; margin-bottom: 12px; }
+.titulo-listado .seccion-titulo { margin: 0; font-size: 20px; }
+.pie-listado { margin-top: 20px; }

@@ -1,0 +1,14 @@
+/* ===== Cierre de caja ===== */
+.estado-diferencia { padding: 6px 0; }
+.acciones-cierre { margin-top: 20px; width: 260px; }
+
+/* ===== Impresión del corte ===== */
+@media print {
+  @page { size: A4; margin: 18mm; }
+  .solo-impresion { display: block; }
+  .contenedor { max-width: none; padding: 0; }
+  .contenido { padding: 0; }
+    .tabla-contenedor { border: 0; }
+  .tabla th { background: #F3E8EB; }
+  .fila-total { background: #F3E8EB; }
+}

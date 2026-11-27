@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Historial y consultas · KamiKōbō</title>
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/componentes.css">
+  <link rel="stylesheet" href="../css/interacciones.css">
+  <link rel="stylesheet" href="../css/paginas/historial.css">
+</head>
+<!-- Cambiar a data-rol="operador" para probar el rol Operador -->
+<body data-rol="admin">
+
+  <!-- ENCABEZADO (idéntico en todas las páginas; luego puede extraerse a un componente) -->
+  <header class="encabezado encabezado-simple">
+    <div class="contenedor">
+      <a class="boton-menu" href="#menu" aria-label="Abrir menú">☰</a>
+      <a class="logo" href="dashboard.html">KamiKōbō</a>
+      <div class="zona-usuario">
+        <a class="icono-usuario" href="#menu-usuario" aria-label="Menú de usuario">👤</a>
+        <nav class="menu-usuario oculto" id="menu-usuario">
+          <a href="perfil.html">Ver perfil</a>
+          <a class="enlace-peligro" href="login.html">Cerrar sesión</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- MENÚ LATERAL (se abre con :target; cierra con href="#cerrar") -->
+  <div class="fondo-oscuro oculto" id="menu">
+    <nav class="menu-lateral">
+      <div class="menu-cabecera"><strong>NAVEGACIÓN</strong><a class="modal-cerrar" href="#cerrar" aria-label="Cerrar menú">✕</a></div>
+      <a href="ventas.html">Punto de venta</a>
+      <a href="inventario.html">Inventario</a>
+      <a href="compras.html" data-rol="admin">Compras</a>
+      <a href="devoluciones.html">Devoluciones</a>
+      <a href="historial.html" data-rol="admin">Historial y Consultas</a>
+      <a href="reportes.html" data-rol="admin">Reportes</a>
+      <a href="usuarios.html" data-rol="admin">Usuarios y Roles</a>
+      <a href="cierre-caja.html" data-rol="admin">Cierre de caja</a>
+      <hr class="menu-separador">
+      <p class="texto-ayuda">Panel de administración</p>
+    </nav>
+  </div>
+
+  <main class="contenedor contenido">
+    <p class="ruta-navegacion">KamiKōbō / MOVIMIENTOS</p>
+    <div class="encabezado-pagina">
+      <div>
+        <h1 class="titulo-pagina">Historial y consultas</h1>
+        <p class="subtitulo-pagina">Busca operaciones y revisa sus detalles sin modificar los registros.</p>
+      </div>
+      
+    </div>
+
+    <form action="#" method="get">
+      <div class="barra-filtros">
+        <div class="campo campo-buscar"><label class="etiqueta" for="buscar-mov">Buscar por folio, código o nombre</label><input class="entrada" type="search" id="buscar-mov" name="buscar" placeholder="Ej. VTA-2026-0321 o Reze"></div>
+        <div class="campo"><label class="etiqueta" for="tipo-mov">Tipo de operación</label><select class="selector" id="tipo-mov" name="tipo"><option>Todas</option><option>Venta</option><option>Compra</option><option>Devolución</option></select></div>
+        <div class="campo"><label class="etiqueta" for="desde-mov">Desde</label><input class="entrada" type="text" id="desde-mov" name="desde" value="2026-11-23"></div>
+        <div class="campo"><label class="etiqueta" for="hasta-mov">Hasta</label><input class="entrada" type="text" id="hasta-mov" name="hasta" value="2026-11-23"></div>
+      </div>
+      <div class="barra-filtros">
+        <div class="campo campo-usuario"><label class="etiqueta" for="usuario-mov">Usuario</label><select class="selector" id="usuario-mov" name="usuario"><option>Todos los usuarios</option><option>Ana López</option><option>Luis Pérez</option></select></div>
+        <button class="boton" type="submit">Aplicar filtros</button>
+        <button class="boton-secundario" type="reset">Limpiar</button>
+      </div>
+    </form>
+
+    <div class="rejilla-con-panel">
+      <section>
+        <h2 class="seccion-titulo">6 movimientos encontrados</h2>
+        <p class="texto-ayuda">Selecciona un folio para consultar el detalle.</p>
+        <!-- BACKEND: lista de movimientos filtrados (data-folio) -->
+      <div class="tabla-contenedor">
+        <table class="tabla">
+          <thead><tr><th>Folio</th><th>Fecha y hora</th><th>Tipo</th><th>Usuario</th><th class="texto-derecha">Total</th></tr></thead>
+          <tbody>
+          <tr class="fila-seleccionada" data-folio="VTA-2026-0321"><td><a class="enlace-fila" href="#cerrar">VTA-2026-0321</a></td><td>2026-11-23 12:40</td><td>Venta</td><td>Ana López</td><td class="texto-derecha">$1,000.00</td></tr>
+          <tr class="fila-alterna" data-folio="DEV-2026-0019"><td><a class="enlace-fila" href="#cerrar">DEV-2026-0019</a></td><td>2026-11-23 12:18</td><td>Devolución</td><td>Luis Pérez</td><td class="texto-derecha">$480.00</td></tr>
+          <tr data-folio="CMP-2026-0147"><td><a class="enlace-fila" href="#cerrar">CMP-2026-0147</a></td><td>2026-11-23 11:55</td><td>Compra</td><td>Ana López</td><td class="texto-derecha">$2,400.00</td></tr>
+          <tr class="fila-alterna" data-folio="VTA-2026-0320"><td><a class="enlace-fila" href="#cerrar">VTA-2026-0320</a></td><td>2026-11-23 11:20</td><td>Venta</td><td>Luis Pérez</td><td class="texto-derecha">$1,250.00</td></tr>
+          <tr data-folio="VTA-2026-0319"><td><a class="enlace-fila" href="#cerrar">VTA-2026-0319</a></td><td>2026-11-23 10:35</td><td>Venta</td><td>Ana López</td><td class="texto-derecha">$750.00</td></tr>
+          <tr class="fila-alterna" data-folio="VTA-2026-0318"><td><a class="enlace-fila" href="#cerrar">VTA-2026-0318</a></td><td>2026-11-23 09:10</td><td>Venta</td><td>Luis Pérez</td><td class="texto-derecha">$1,000.00</td></tr>
+          </tbody>
+        </table>
+      </div>
+        <div class="tabla-pie">
+          <span>Mostrando 1–6 de 6 movimientos</span>
+          <nav class="paginacion" aria-label="Paginación">
+            <a class="pagina-enlace" href="#cerrar">Anterior</a>
+            <a class="pagina-enlace activo" href="#cerrar">1</a>
+            <a class="pagina-enlace" href="#cerrar">Siguiente</a>
+          </nav>
+        </div>
+      </section>
+
+      <aside class="panel-lateral">
+        <h2 class="panel-titulo">Detalle de venta</h2>
+        <!-- BACKEND: detalle del folio seleccionado -->
+        <p class="texto-principal" data-folio="VTA-2026-0321"><strong>VTA-2026-0321</strong></p>
+        <p class="texto-principal">Confirmada</p>
+        <p class="texto-ayuda detalle-fecha">2026-11-23 12:40<br>Cajera: Ana López</p>
+        <hr class="menu-separador">
+        <p><strong>Reze - lovers</strong></p>
+        <p class="texto-ayuda">FIG-001 · 1 unidad × $1,000.00</p>
+        <div class="linea-dato linea-detalle"><span class="texto-ayuda">Subtotal</span><span>$1,000.00</span></div>
+        <div class="linea-dato linea-detalle"><span class="texto-ayuda">IVA</span><span>$0.00</span></div>
+        <div class="linea-dato linea-detalle"><strong>Total</strong><strong class="texto-principal">$1,000.00</strong></div>
+        <button class="boton boton-ancho" type="button">Ver comprobante</button>
+        <p class="texto-ayuda">Consulta de solo lectura</p>
+      </aside>
+    </div>
+  </main>
+
+  <!-- PIE DE PÁGINA (idéntico en todas las páginas) -->
+  <footer class="pie-pagina">
+    <div class="contenedor">
+      <p class="logo">KamiKōbō</p>
+      <p>Panel de administración</p>
+      <p>Catálogo · Compras · Ventas · Devoluciones</p>
+      <div class="pie-sesion">
+        <span>Sesión: Ana López / Administrador</span>
+        <span>Sistema de gestión comercial</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js" defer></script>
+</body>
+</html>

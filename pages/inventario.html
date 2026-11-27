@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Inventario · KamiKōbō</title>
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/componentes.css">
+  <link rel="stylesheet" href="../css/interacciones.css">
+  <link rel="stylesheet" href="../css/paginas/inventario.css">
+</head>
+<!-- Cambiar a data-rol="operador" para probar el rol Operador -->
+<body data-rol="admin">
+
+  <!-- ENCABEZADO (idéntico en todas las páginas; luego puede extraerse a un componente) -->
+  <header class="encabezado">
+    <div class="contenedor">
+      <a class="boton-menu" href="#menu" aria-label="Abrir menú">☰</a>
+      <a class="logo" href="dashboard.html">KamiKōbō</a>
+      <input class="buscador" type="search" placeholder="Buscar en el sistema…" aria-label="Buscar en el sistema">
+      <div class="zona-usuario">
+        <a class="icono-usuario" href="#menu-usuario" aria-label="Menú de usuario">👤</a>
+        <nav class="menu-usuario oculto" id="menu-usuario">
+          <a href="perfil.html">Ver perfil</a>
+          <a class="enlace-peligro" href="login.html">Cerrar sesión</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- MENÚ LATERAL (se abre con :target; cierra con href="#cerrar") -->
+  <div class="fondo-oscuro oculto" id="menu">
+    <nav class="menu-lateral">
+      <div class="menu-cabecera"><strong>NAVEGACIÓN</strong><a class="modal-cerrar" href="#cerrar" aria-label="Cerrar menú">✕</a></div>
+      <a href="ventas.html">Punto de venta</a>
+      <a href="inventario.html">Inventario</a>
+      <a href="compras.html" data-rol="admin">Compras</a>
+      <a href="devoluciones.html">Devoluciones</a>
+      <a href="historial.html" data-rol="admin">Historial y Consultas</a>
+      <a href="reportes.html" data-rol="admin">Reportes</a>
+      <a href="usuarios.html" data-rol="admin">Usuarios y Roles</a>
+      <a href="cierre-caja.html" data-rol="admin">Cierre de caja</a>
+      <hr class="menu-separador">
+      <p class="texto-ayuda">Panel de administración</p>
+    </nav>
+  </div>
+
+  <main class="contenedor contenido">
+    <p class="ruta-navegacion">KamiKōbō / INVENTARIO</p>
+    <div class="encabezado-pagina">
+      <div>
+        <h1 class="titulo-pagina">Inventario</h1>
+        <p class="subtitulo-pagina">Consulta el catálogo. Solo los productos registrados y activos pueden venderse.</p>
+      </div>
+      <a class="boton" href="#modal-agregar" data-rol="admin">+ Agregar producto</a>
+    </div>
+
+    <!-- BACKEND: los 3 indicadores se calculan con los productos del filtro actual -->
+    <section class="rejilla-kpis">
+      <div class="indicador"><span class="indicador-numero">8</span><span class="indicador-texto">Productos listados</span></div>
+      <div class="indicador"><span class="indicador-numero">76</span><span class="indicador-texto">Existencias totales</span></div>
+      <div class="indicador"><span class="indicador-numero">2</span><span class="indicador-texto">Productos agotados</span></div>
+    </section>
+
+    <form class="filtros-inventario" action="#" method="get">
+      <input class="entrada" type="search" name="buscar" placeholder="Buscar por nombre, ID o código de barras…" aria-label="Buscar producto por nombre, ID o código de barras">
+      <select class="selector" name="disponibilidad" aria-label="Filtrar por disponibilidad">
+        <option>Disponibilidad: todas</option><option>Disponibles</option><option>Agotados</option><option>Inactivos</option>
+      </select>
+    </form>
+
+    <nav class="rejilla-chips" aria-label="Categorías">
+      <a class="chip chip-categoria" href="#cerrar">Recién llegados</a>
+      <a class="chip chip-categoria" href="#cerrar">Figuras estáticas</a>
+      <a class="chip chip-categoria" href="#cerrar">Figuras articuladas</a>
+      <a class="chip chip-categoria" href="#cerrar">Figuras chibi</a>
+      <a class="chip chip-categoria" href="#cerrar">Figuras escala</a>
+      <a class="chip chip-categoria" href="#cerrar">Armables</a>
+      <a class="chip chip-categoria" href="#cerrar">Devoluciones</a>
+      <a class="chip chip-categoria" href="#cerrar">Artículos dañados</a>
+    </nav>
+
+    <div class="fila titulo-listado">
+      <h2 class="seccion-titulo">Todos los productos</h2>
+      <span class="texto-ayuda">8 productos</span>
+    </div>
+
+    <!-- BACKEND: lista de productos (una tarjeta por producto, con data-id) -->
+    <section class="rejilla-productos">
+        <a class="tarjeta-producto" href="#modal-consultar" data-id="FIG-001">
+          <div class="producto-cabecera">
+            <!-- IMG: foto de la figura Sakura · edición primavera (assets/img/sakura-primavera.jpg) -->
+            <img class="producto-imagen" src="../assets/img/sakura-primavera.jpg" alt="Sakura · edición primavera">
+            <span class="insignia insignia-disponible">Disponible</span>
+          </div>
+          <div class="producto-cuerpo">
+            <p class="producto-meta">FIG-001 · Figuras estáticas</p>
+            <h3 class="producto-nombre">Sakura · edición primavera</h3>
+            <div class="producto-pie"><span class="producto-precio">$ 850.00</span><span class="producto-existencias">12 unidades</span></div>
+          </div>
+        </a>
+        <a class="tarjeta-producto" href="#modal-consultar" data-id="FIG-002">
+          <div class="producto-cabecera">
+            <!-- IMG: foto de la figura Ninja articulado (assets/img/ninja-articulado.jpg) -->
+            <img class="producto-imagen" src="../assets/img/ninja-articulado.jpg" alt="Ninja articulado">
+            <span class="insignia insignia-disponible">Disponible</span>
+          </div>
+          <div class="producto-cuerpo">
+            <p class="producto-meta">FIG-002 · Figuras articuladas</p>
+            <h3 class="producto-nombre">Ninja articulado</h3>
+            <div class="producto-pie"><span class="producto-precio">$ 640.00</span><span class="producto-existencias">8 unidades</span></div>
+          </div>
+        </a>
+        <a class="tarjeta-producto" href="#modal-consultar" data-id="FIG-003">
+          <div class="producto-cabecera">
+            <!-- IMG: foto de la figura Pequeño aventurero (assets/img/pequeno-aventurero.jpg) -->
+            <img class="producto-imagen" src="../assets/img/pequeno-aventurero.jpg" alt="Pequeño aventurero">
+            <span class="insignia insignia-agotado">Agotado</span>
+          </div>
+          <div class="producto-cuerpo">
+            <p class="producto-meta">FIG-003 · Figuras chibi</p>
+            <h3 class="producto-nombre">Pequeño aventurero</h3>
+            <div class="producto-pie"><span class="producto-precio">$ 320.00</span><span class="producto-existencias texto-peligro">0 unidades</span></div>
+          </div>
+        </a>
+        <a class="tarjeta-producto" href="#modal-consultar" data-id="FIG-004">
+          <div class="producto-cabecera">
+            <!-- IMG: foto de la figura Guardiana 1/7 (assets/img/guardiana.jpg) -->
+            <img class="producto-imagen" src="../assets/img/guardiana.jpg" alt="Guardiana 1/7">
+            <span class="insignia insignia-disponible">Disponible</span>
+          </div>
+          <div class="producto-cuerpo">
+            <p class="producto-meta">FIG-004 · Figuras escala</p>
+            <h3 class="producto-nombre">Guardiana 1/7</h3>
+            <div class="producto-pie"><span class="producto-precio">$ 1,450.00</span><span class="producto-existencias">5 unidades</span></div>
+          </div>
+        </a>
+        <a class="tarjeta-producto" href="#modal-consultar" data-id="FIG-005">
+          <div class="producto-cabecera">
+            <!-- IMG: foto de la figura Mecha de colección (assets/img/mecha.jpg) -->
+            <img class="producto-imagen" src="../assets/img/mecha.jpg" alt="Mecha de colección">
+            <span class="insignia insignia-disponible">Disponible</span>
+          </div>
+          <div class="producto-cuerpo">
+            <p class="producto-meta">FIG-005 · Armables</p>
+            <h3 class="producto-nombre">Mecha de colección</h3>
+            <div class="producto-pie"><span class="producto-precio">$ 980.00</span><span class="producto-existencias">18 unidades</span></div>
+          </div>
+        </a>
+        <a class="tarjeta-producto" href="#modal-consultar" data-id="FIG-006">
+          <div class="producto-cabecera">
+            <!-- IMG: foto de la figura Viajera espacial (assets/img/viajera-espacial.jpg) -->
+            <img class="producto-imagen" src="../assets/img/viajera-espacial.jpg" alt="Viajera espacial">
+            <span class="insignia insignia-disponible">Disponible</span>
+          </div>
+          <div class="producto-cuerpo">
+            <p class="producto-meta">FIG-006 · Figuras estáticas</p>
+            <h3 class="producto-nombre">Viajera espacial</h3>
+            <div class="producto-pie"><span class="producto-precio">$ 720.00</span><span class="producto-existencias">24 unidades</span></div>
+          </div>
+        </a>
+        <a class="tarjeta-producto" href="#modal-consultar" data-id="FIG-007">
+          <div class="producto-cabecera">
+            <!-- IMG: foto de la figura Pequeña hechicera (assets/img/hechicera.jpg) -->
+            <img class="producto-imagen" src="../assets/img/hechicera.jpg" alt="Pequeña hechicera">
+            <span class="insignia insignia-agotado">Agotado</span>
+          </div>
+          <div class="producto-cuerpo">
+            <p class="producto-meta">FIG-007 · Figuras chibi</p>
+            <h3 class="producto-nombre">Pequeña hechicera</h3>
+            <div class="producto-pie"><span class="producto-precio">$ 350.00</span><span class="producto-existencias texto-peligro">0 unidades</span></div>
+          </div>
+        </a>
+        <a class="tarjeta-producto" href="#modal-consultar" data-id="FIG-008">
+          <div class="producto-cabecera">
+            <!-- IMG: foto de la figura Robot articulado (assets/img/robot.jpg) -->
+            <img class="producto-imagen" src="../assets/img/robot.jpg" alt="Robot articulado">
+            <span class="insignia insignia-disponible">Disponible</span>
+          </div>
+          <div class="producto-cuerpo">
+            <p class="producto-meta">FIG-008 · Figuras articuladas</p>
+            <h3 class="producto-nombre">Robot articulado</h3>
+            <div class="producto-pie"><span class="producto-precio">$ 1,100.00</span><span class="producto-existencias">9 unidades</span></div>
+          </div>
+        </a>
+        <!-- ESTADO POST-ALTA (PDF p.15): el JS quita .oculto, sube KPIs a 9 / 76 / 3 y el contador a "9 productos" -->
+        <a class="tarjeta-producto oculto" href="#modal-consultar-nuevo" data-id="FIG-009">
+          <div class="producto-cabecera">
+            <!-- IMG: foto de la figura Sakura · edición verano (assets/img/sakura-verano.jpg) -->
+            <img class="producto-imagen" src="../assets/img/sakura-verano.jpg" alt="Sakura · edición verano">
+            <span class="insignia insignia-agotado">Agotado</span>
+          </div>
+          <div class="producto-cuerpo">
+            <p class="producto-meta">FIG-009 · Figuras estáticas</p>
+            <h3 class="producto-nombre">Sakura · edición verano</h3>
+            <div class="producto-pie"><span class="producto-precio">$ 850.00</span><span class="producto-existencias">0 unidades</span></div>
+          </div>
+        </a>
+    </section>
+
+    <p class="texto-ayuda pie-listado">Selecciona una ficha para consultar y administrar el producto. <a class="boton-enlace" href="#modal-inactivo">Consultar producto inactivo ↘</a></p>
+
+    <!-- ===== MODALES (se abren con :target; cierran con href="#cerrar") ===== -->
+
+    <!-- Agregar producto (solo administrador) -->
+    <section class="modal oculto" id="modal-agregar" data-rol="admin" aria-label="Agregar producto">
+      <div class="modal-contenido">
+        <div class="modal-cabecera">
+          <h2 class="modal-titulo">Agregar producto</h2>
+          <a class="modal-cerrar" href="#cerrar" aria-label="Cerrar">✕</a>
+        </div>
+        <p class="texto-ayuda">Ingresa los datos iniciales del catálogo. * Obligatorios</p>
+        <!-- Estado de error: el JS quita .oculto de la alerta y agrega .error a los campos -->
+        <div class="alerta alerta-error oculto">Formulario incompleto. Completa los campos y adjunta una imagen.</div>
+        <form class="formulario" action="#" method="post">
+          <div class="rejilla-formulario">
+            <div class="campo">
+              <label class="etiqueta" for="codigo-nuevo">Código de barras único *</label>
+              <input class="entrada" type="text" id="codigo-nuevo" name="codigo_barras" value="" placeholder="Escanea o escribe el código" required>
+              <p class="texto-error oculto">Código de barras obligatorio o ya registrado.</p>
+            </div>
+            <div class="campo">
+              <label class="etiqueta" for="nombre-nuevo">Nombre del producto *</label>
+              <input class="entrada" type="text" id="nombre-nuevo" name="nombre" value="" placeholder="Nombre comercial" required>
+            </div>
+            <div class="campo campo-ancho">
+              <label class="etiqueta" for="descripcion-nuevo">Descripción *</label>
+              <input class="entrada" type="text" id="descripcion-nuevo" name="descripcion" value="" placeholder="Características y detalles de la figura" required>
+            </div>
+          </div>
+          <div class="rejilla-formulario-tres">
+            <div class="campo">
+              <label class="etiqueta" for="precio-nuevo">Precio de venta *</label>
+              <input class="entrada" type="text" id="precio-nuevo" name="precio" value="" placeholder="$ 0.00" required>
+              <p class="texto-error oculto">El precio debe ser mayor que 0.</p>
+            </div>
+            <div class="campo">
+              <label class="etiqueta" for="categoria-nuevo">Categoría</label>
+              <select class="selector" id="categoria-nuevo" name="categoria">
+                <option>Figuras estáticas</option><option>Figuras articuladas</option><option>Figuras chibi</option>
+                <option>Figuras escala</option><option>Armables</option><option>Devoluciones</option><option>Artículos dañados</option>
+              </select>
+            </div>
+            <div class="campo">
+              <label class="etiqueta" for="estado-nuevo">Estado *</label>
+              <select class="selector" id="estado-nuevo" name="estado"><option>Activo</option><option>Inactivo</option></select>
+            </div>
+          </div>
+          <div class="caja-archivo">
+            <div>
+              <strong>Imagen del producto *</strong>
+              <p class="texto-ayuda">JPG o PNG · selecciona al menos una imagen</p>
+              <p class="texto-error oculto">Falta la imagen obligatoria.</p>
+            </div>
+            <label class="boton-secundario" for="imagen-nuevo">Seleccionar</label>
+            <input class="oculto" type="file" id="imagen-nuevo" name="imagen" accept=".jpg,.jpeg,.png">
+          </div>
+          <p class="texto-ayuda">Las existencias se registran al confirmar una compra.</p>
+          <div class="modal-acciones">
+            <a class="boton-secundario" href="#cerrar">Cancelar</a>
+            <a class="boton" href="#modal-agregar-incompleto">Guardar producto</a><!-- BACKEND: submit real; con datos inválidos muestra el estado de error -->
+          </div>
+          <p class="texto-ayuda">ID interno: automático e inmutable · Distinto del código de barras. <a class="boton-enlace" href="#modal-agregar-listo">Ver ejemplo con datos ↘</a></p>
+        </form>
+      </div>
+    </section>
+
+    <!-- Consultar producto (administrador: con Desactivar y Editar; operador: solo Volver) -->
+    <section class="modal oculto" id="modal-consultar" aria-label="Consultar producto">
+      <div class="modal-contenido modal-ancho">
+        <div class="modal-cabecera">
+          <div><h2 class="modal-titulo">Consultar producto</h2><p class="texto-ayuda">Información del catálogo</p></div>
+          <a class="modal-cerrar" href="#cerrar" aria-label="Cerrar">✕</a>
+        </div>
+        <!-- BACKEND: datos del producto seleccionado (data-id) -->
+        <div class="modal-detalle">
+          <!-- IMG: foto grande del producto (assets/img/sakura-primavera.jpg) -->
+          <img class="modal-imagen" src="../assets/img/sakura-primavera.jpg" alt="Sakura · edición primavera">
+          <div class="modal-datos">
+            <h3 class="seccion-titulo">Sakura · edición primavera</h3>
+            <p><strong>ID interno: FIG-001 · No editable</strong></p>
+            <p>Código de barras único<br>7501234567893</p>
+            <p>Estado: Activo &nbsp; Existencias: 12</p>
+            <p class="producto-precio">Precio de venta: $850.00</p>
+          </div>
+        </div>
+        <p><strong>Figuras estáticas</strong></p>
+        <p>Figura estática de colección, edición primavera.</p>
+        <div class="alerta alerta-informacion">Solo los productos registrados, activos y con existencias pueden agregarse a una venta.</div>
+        <div class="modal-acciones">
+          <a class="boton-secundario" href="#cerrar">Volver al inventario</a>
+          <a class="boton-secundario" href="#modal-desactivar" data-rol="admin">Desactivar</a>
+          <a class="boton" href="#modal-editar" data-rol="admin">Editar producto</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Editar producto (solo administrador) -->
+    <section class="modal oculto" id="modal-editar" data-rol="admin" aria-label="Editar producto">
+      <div class="modal-contenido">
+        <div class="modal-cabecera">
+          <h2 class="modal-titulo">Editar producto</h2>
+          <a class="modal-cerrar" href="#cerrar" aria-label="Cerrar">✕</a>
+        </div>
+        <p class="texto-ayuda">ID interno: FIG-001 · No editable · * Obligatorios</p>
+        <div class="alerta alerta-error oculto">No se pudo guardar. Corrige los campos marcados en naranja.</div>
+        <form class="formulario" action="#" method="post">
+          <div class="rejilla-formulario">
+            <div class="campo">
+              <label class="etiqueta" for="codigo-editar">Código de barras único *</label>
+              <input class="entrada" type="text" id="codigo-editar" name="codigo_barras" value="7501234567893" placeholder="Escanea o escribe el código" required>
+              <p class="texto-error oculto">Código de barras obligatorio o ya registrado.</p>
+            </div>
+            <div class="campo">
+              <label class="etiqueta" for="nombre-editar">Nombre del producto *</label>
+              <input class="entrada" type="text" id="nombre-editar" name="nombre" value="Sakura · edición primavera" placeholder="Nombre comercial" required>
+            </div>
+            <div class="campo campo-ancho">
+              <label class="etiqueta" for="descripcion-editar">Descripción *</label>
+              <input class="entrada" type="text" id="descripcion-editar" name="descripcion" value="Figura estática de colección. Incluye empaque original." placeholder="Características y detalles de la figura" required>
+            </div>
+          </div>
+          <div class="rejilla-formulario-tres">
+            <div class="campo">
+              <label class="etiqueta" for="precio-editar">Precio de venta *</label>
+              <input class="entrada" type="text" id="precio-editar" name="precio" value="$ 850.00" placeholder="$ 0.00" required>
+              <p class="texto-error oculto">El precio debe ser mayor que 0.</p>
+            </div>
+            <div class="campo">
+              <label class="etiqueta" for="categoria-editar">Categoría</label>
+              <select class="selector" id="categoria-editar" name="categoria">
+                <option>Figuras estáticas</option><option>Figuras articuladas</option><option>Figuras chibi</option>
+                <option>Figuras escala</option><option>Armables</option><option>Devoluciones</option><option>Artículos dañados</option>
+              </select>
+            </div>
+            <div class="campo">
+              <label class="etiqueta" for="estado-editar">Estado *</label>
+              <select class="selector" id="estado-editar" name="estado"><option>Activo</option><option>Inactivo</option></select>
+            </div>
+          </div>
+          <div class="caja-archivo">
+            <div>
+              <strong>Imagen del producto *</strong>
+              <p class="texto-ayuda">sakura.png · Imagen actual conservada</p>
+              <p class="texto-error oculto">Falta la imagen obligatoria.</p>
+            </div>
+            <label class="boton-secundario" for="imagen-editar">Cambiar</label>
+            <input class="oculto" type="file" id="imagen-editar" name="imagen" accept=".jpg,.jpeg,.png">
+          </div>
+          <p class="texto-ayuda">Existencias: 12 · No se modifican desde la ficha del producto.</p>
+          <div class="modal-acciones">
+            <a class="boton-secundario" href="#cerrar">Cancelar</a>
+            <a class="boton" href="#modal-cambios-guardados">Guardar cambios</a><!-- BACKEND: submit real -->
+          </div>
+          <p class="texto-ayuda">El código de barras debe ser único. La imagen es obligatoria.</p>
+        </form>
+      </div>
+    </section>
+
+    <!-- Desactivar producto (solo administrador) -->
+    <section class="modal oculto" id="modal-desactivar" data-rol="admin" aria-label="Desactivar producto">
+      <div class="modal-contenido modal-ancho">
+        <div class="modal-cabecera">
+          <div><h2 class="modal-titulo">Desactivar producto</h2><p class="texto-ayuda">Confirma el cambio de estado del producto.</p></div>
+          <a class="modal-cerrar" href="#cerrar" aria-label="Cerrar">✕</a>
+        </div>
+        <div class="modal-detalle">
+          <!-- IMG: foto grande del producto (assets/img/sakura-primavera.jpg) -->
+          <img class="modal-imagen" src="../assets/img/sakura-primavera.jpg" alt="Sakura · edición primavera">
+          <div class="modal-datos">
+            <h3 class="seccion-titulo">Sakura · edición primavera</h3>
+            <p><strong>ID interno: FIG-001 · No editable</strong></p>
+            <p>Código de barras único<br>7501234567893</p>
+            <p>Estado: Activo &nbsp; Existencias: 12</p>
+            <p class="producto-precio">Precio de venta: $850.00</p>
+          </div>
+        </div>
+        <p><strong>Figuras estáticas</strong></p>
+        <p>Figura estática de colección, edición primavera.</p>
+        <div class="alerta alerta-informacion">Al confirmar no podrá venderse. Se conservan sus 12 existencias y su historial.</div>
+        <div class="modal-acciones">
+          <a class="boton-secundario" href="#cerrar">Cancelar</a>
+          <a class="boton" href="#modal-inactivo">Confirmar desactivación</a><!-- BACKEND: desactivar -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Consultar producto inactivo -->
+    <section class="modal oculto" id="modal-inactivo" aria-label="Consultar producto inactivo">
+      <div class="modal-contenido modal-ancho">
+        <div class="modal-cabecera">
+          <div><h2 class="modal-titulo">Consultar producto</h2><p class="texto-ayuda">Información del catálogo</p></div>
+          <a class="modal-cerrar" href="#cerrar" aria-label="Cerrar">✕</a>
+        </div>
+        <div class="modal-detalle">
+          <!-- IMG: foto grande del producto (assets/img/sakura-primavera.jpg) -->
+          <img class="modal-imagen" src="../assets/img/sakura-primavera.jpg" alt="Sakura · edición primavera">
+          <div class="modal-datos">
+            <h3 class="seccion-titulo">Sakura · edición primavera</h3>
+            <p><strong>ID interno: FIG-001 · No editable</strong></p>
+            <p>Código de barras único<br>7501234567893</p>
+            <p><span class="texto-peligro"><strong>Estado: Inactivo &nbsp; Existencias: 12</strong></span></p>
+            <p class="producto-precio">Precio de venta: $850.00</p>
+          </div>
+        </div>
+        <p><strong>Figuras estáticas</strong></p>
+        <p>Figura estática de colección, edición primavera.</p>
+        <div class="alerta alerta-informacion">Producto desactivado. No está disponible para nuevas ventas. Sus existencias e historial se conservan.</div>
+        <div class="modal-acciones">
+          <a class="boton-secundario" href="#cerrar">Volver al inventario</a>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- Agregar producto · modal-agregar-listo -->
+    <section class="modal oculto" id="modal-agregar-listo" data-rol="admin" aria-label="Agregar producto">
+      <div class="modal-contenido">
+        <div class="modal-cabecera">
+          <h2 class="modal-titulo">Agregar producto</h2>
+          <a class="modal-cerrar" href="#cerrar" aria-label="Cerrar">✕</a>
+        </div>
+        <p class="texto-ayuda">Ingresa los datos iniciales del catálogo. * Obligatorios</p>
+        <form class="formulario" action="#" method="post">
+          <div class="rejilla-formulario">
+            <div class="campo">
+              <label class="etiqueta" for="codigo-listo">Código de barras único *</label>
+              <input class="entrada" type="text" id="codigo-listo" name="codigo_barras" value="7501234567909" placeholder="Escanea o escribe el código" required>
+              <p class="texto-error oculto">Código de barras obligatorio o ya registrado.</p>
+            </div>
+            <div class="campo">
+              <label class="etiqueta" for="nombre-listo">Nombre del producto *</label>
+              <input class="entrada" type="text" id="nombre-listo" name="nombre" value="Sakura · edición verano" placeholder="Nombre comercial" required>
+            </div>
+            <div class="campo campo-ancho">
+              <label class="etiqueta" for="descripcion-listo">Descripción *</label>
+              <input class="entrada" type="text" id="descripcion-listo" name="descripcion" value="Figura estática de colección, edición verano." placeholder="Características y detalles de la figura" required>
+            </div>
+          </div>
+          <div class="rejilla-formulario-tres">
+            <div class="campo">
+              <label class="etiqueta" for="precio-listo">Precio de venta *</label>
+              <input class="entrada" type="text" id="precio-listo" name="precio" value="$ 850.00" placeholder="$ 0.00" required>
+              <p class="texto-error oculto">El precio debe ser mayor que 0.</p>
+            </div>
+            <div class="campo">
+              <label class="etiqueta" for="categoria-listo">Categoría</label>
+              <select class="selector" id="categoria-listo" name="categoria"><option>Figuras estáticas</option><option>Figuras articuladas</option><option>Figuras chibi</option><option>Figuras escala</option><option>Armables</option><option>Devoluciones</option><option>Artículos dañados</option></select>
+            </div>
+            <div class="campo">
+              <label class="etiqueta" for="estado-listo">Estado *</label>
+              <select class="selector" id="estado-listo" name="estado"><option>Activo</option><option>Inactivo</option></select>
+            </div>
+          </div>
+          <div class="caja-archivo">
+            <div>
+              <strong>Imagen del producto *</strong>
+              <p class="texto-ayuda">sakura-verano.png · Imagen seleccionada</p>
+              <p class="texto-error oculto">Falta la imagen obligatoria.</p>
+            </div>
+            <label class="boton-secundario" for="imagen-listo">Cambiar</label>
+            <input class="oculto" type="file" id="imagen-listo" name="imagen" accept=".jpg,.jpeg,.png">
+          </div>
+          <p class="texto-ayuda">Las existencias se registran al confirmar una compra.</p>
+          <div class="modal-acciones">
+            <a class="boton-secundario" href="#cerrar">Cancelar</a>
+            <a class="boton" href="#modal-consultar-nuevo">Guardar producto</a><!-- BACKEND: submit real -->
+          </div>
+          <p class="texto-ayuda">ID interno al guardar: FIG-009 · Existencias iniciales: 0.</p>
+        </form>
+      </div>
+    </section>
+
+    <!-- Agregar producto · modal-agregar-incompleto -->
+    <section class="modal oculto" id="modal-agregar-incompleto" data-rol="admin" aria-label="Agregar producto">
+      <div class="modal-contenido">
+        <div class="modal-cabecera">
+          <h2 class="modal-titulo">Agregar producto</h2>
+          <a class="modal-cerrar" href="#cerrar" aria-label="Cerrar">✕</a>
+        </div>
+        <p class="texto-ayuda">Ingresa los datos iniciales del catálogo. * Obligatorios</p>
+        <div class="alerta alerta-error">Formulario incompleto. Completa los campos y adjunta una imagen.</div>
+        <form class="formulario" action="#" method="post">
+          <div class="rejilla-formulario">
+            <div class="campo">
+              <label class="etiqueta" for="codigo-incompleto">Código de barras único *</label>
+              <input class="entrada error" type="text" id="codigo-incompleto" name="codigo_barras" value="" placeholder="Escribe un código de barras válido" required>
+              <p class="texto-error">Código de barras obligatorio.</p>
+            </div>
+            <div class="campo">
+              <label class="etiqueta" for="nombre-incompleto">Nombre del producto *</label>
+              <input class="entrada" type="text" id="nombre-incompleto" name="nombre" value="" placeholder="Nombre obligatorio" required>
+            </div>
+            <div class="campo campo-ancho">
+              <label class="etiqueta" for="descripcion-incompleto">Descripción *</label>
+              <input class="entrada" type="text" id="descripcion-incompleto" name="descripcion" value="" placeholder="Descripción obligatoria" required>
+            </div>
+          </div>
+          <div class="rejilla-formulario-tres">
+            <div class="campo">
+              <label class="etiqueta" for="precio-incompleto">Precio de venta *</label>
+              <input class="entrada error" type="text" id="precio-incompleto" name="precio" value="" placeholder="$ 0.00" required>
+              <p class="texto-error">El precio debe ser mayor que 0.</p>
+            </div>
+            <div class="campo">
+              <label class="etiqueta" for="categoria-incompleto">Categoría</label>
+              <select class="selector" id="categoria-incompleto" name="categoria"><option>Figuras estáticas</option><option>Figuras articuladas</option><option>Figuras chibi</option><option>Figuras escala</option><option>Armables</option><option>Devoluciones</option><option>Artículos dañados</option></select>
+            </div>
+            <div class="campo">
+              <label class="etiqueta" for="estado-incompleto">Estado *</label>
+              <select class="selector" id="estado-incompleto" name="estado"><option>Activo</option><option>Inactivo</option></select>
+            </div>
+          </div>
+          <div class="caja-archivo">
+            <div>
+              <strong>Imagen del producto *</strong>
+              <p class="texto-ayuda">JPG o PNG · selecciona al menos una imagen</p>
+              <p class="texto-error">Falta la imagen obligatoria.</p>
+            </div>
+            <label class="boton-secundario" for="imagen-incompleto">Seleccionar</label>
+            <input class="oculto" type="file" id="imagen-incompleto" name="imagen" accept=".jpg,.jpeg,.png">
+          </div>
+          <p class="texto-ayuda">Las existencias se registran al confirmar una compra.</p>
+          <div class="modal-acciones">
+            <a class="boton-secundario" href="#cerrar">Cancelar</a>
+            <button class="boton" type="submit">Completar datos</button>
+          </div>
+          <p class="texto-ayuda">ID interno: automático e inmutable · Distinto del código de barras.</p>
+          <a class="boton-enlace" href="#modal-agregar-duplicado">Ver ejemplo de código duplicado ↘</a>
+        </form>
+      </div>
+    </section>
+
+    <!-- Agregar producto · modal-agregar-duplicado -->
+    <section class="modal oculto" id="modal-agregar-duplicado" data-rol="admin" aria-label="Agregar producto">
+      <div class="modal-contenido">
+        <div class="modal-cabecera">
+          <h2 class="modal-titulo">Agregar producto</h2>
+          <a class="modal-cerrar" href="#cerrar" aria-label="Cerrar">✕</a>
+        </div>
+        <p class="texto-ayuda">Ingresa los datos iniciales del catálogo. * Obligatorios</p>
+        <div class="alerta alerta-error">No se pudo guardar. Corrige los campos marcados en naranja.</div>
+        <form class="formulario" action="#" method="post">
+          <div class="rejilla-formulario">
+            <div class="campo">
+              <label class="etiqueta" for="codigo-duplicado">Código de barras único *</label>
+              <input class="entrada error" type="text" id="codigo-duplicado" name="codigo_barras" value="7501234567893" placeholder="Escanea o escribe el código" required>
+              <p class="texto-error">Código de barras ya registrado.</p>
+            </div>
+            <div class="campo">
+              <label class="etiqueta" for="nombre-duplicado">Nombre del producto *</label>
+              <input class="entrada" type="text" id="nombre-duplicado" name="nombre" value="Sakura · edición primavera" placeholder="Nombre comercial" required>
+            </div>
+            <div class="campo campo-ancho">
+              <label class="etiqueta" for="descripcion-duplicado">Descripción *</label>
+              <input class="entrada" type="text" id="descripcion-duplicado" name="descripcion" value="Figura estática de colección, edición primavera." placeholder="Características y detalles de la figura" required>
+            </div>
+          </div>
+          <div class="rejilla-formulario-tres">
+            <div class="campo">
+              <label class="etiqueta" for="precio-duplicado">Precio de venta *</label>
+              <input class="entrada error" type="text" id="precio-duplicado" name="precio" value="-50.00" placeholder="$ 0.00" required>
+              <p class="texto-error">El precio debe ser mayor que 0.</p>
+            </div>
+            <div class="campo">
+              <label class="etiqueta" for="categoria-duplicado">Categoría</label>
+              <select class="selector" id="categoria-duplicado" name="categoria"><option>Figuras estáticas</option><option>Figuras articuladas</option><option>Figuras chibi</option><option>Figuras escala</option><option>Armables</option><option>Devoluciones</option><option>Artículos dañados</option></select>
+            </div>
+            <div class="campo">
+              <label class="etiqueta" for="estado-duplicado">Estado *</label>
+              <select class="selector" id="estado-duplicado" name="estado"><option>Activo</option><option>Inactivo</option></select>
+            </div>
+          </div>
+          <div class="caja-archivo">
+            <div>
+              <strong>Imagen del producto *</strong>
+              <p class="texto-ayuda">sakura.png · Imagen seleccionada</p>
+              <p class="texto-error oculto">Falta la imagen obligatoria.</p>
+            </div>
+            <label class="boton-secundario" for="imagen-duplicado">Cambiar</label>
+            <input class="oculto" type="file" id="imagen-duplicado" name="imagen" accept=".jpg,.jpeg,.png">
+          </div>
+          <p class="texto-ayuda">Las existencias se registran al confirmar una compra.</p>
+          <div class="modal-acciones">
+            <a class="boton-secundario" href="#cerrar">Cancelar</a>
+            <button class="boton" type="submit">Corregir datos</button>
+          </div>
+          <p class="texto-ayuda">ID interno: automático e inmutable · Distinto del código de barras.</p>
+        </form>
+      </div>
+    </section>
+
+    <!-- Consultar producto · modal-consultar-nuevo -->
+    <section class="modal oculto" id="modal-consultar-nuevo" aria-label="Consultar producto">
+      <div class="modal-contenido modal-ancho">
+        <div class="modal-cabecera">
+          <div><h2 class="modal-titulo">Consultar producto</h2><p class="texto-ayuda">Información del catálogo · Datos de ejemplo</p></div>
+          <a class="modal-cerrar" href="#cerrar" aria-label="Cerrar">✕</a>
+        </div>
+        <div class="modal-detalle">
+          <!-- IMG: foto grande del producto (assets/img/sakura-verano.jpg) -->
+          <img class="modal-imagen" src="../assets/img/sakura-verano.jpg" alt="Sakura · edición verano">
+          <div class="modal-datos">
+            <h3 class="seccion-titulo">Sakura · edición verano</h3>
+            <p><strong>ID interno: FIG-009 · No editable</strong></p>
+            <p>Código de barras único<br>7501234567909</p>
+            <p>Estado: Activo &nbsp; Existencias: 0</p>
+            <p class="producto-precio">Precio de venta: $ 850.00</p>
+          </div>
+        </div>
+        <p><strong>Figuras estáticas</strong></p>
+        <p>Figura estática de colección, edición verano.</p>
+        <div class="alerta alerta-informacion">Producto registrado con imagen. Existencias: 0. Se incrementan únicamente al confirmar una compra.</div>
+        <div class="modal-acciones">
+          <a class="boton-secundario" href="#cerrar">Volver al inventario</a>
+          <a class="boton" href="#modal-editar-nuevo" data-rol="admin">Editar producto</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Editar producto · modal-editar-nuevo -->
+    <section class="modal oculto" id="modal-editar-nuevo" data-rol="admin" aria-label="Editar producto">
+      <div class="modal-contenido">
+        <div class="modal-cabecera">
+          <h2 class="modal-titulo">Editar producto</h2>
+          <a class="modal-cerrar" href="#cerrar" aria-label="Cerrar">✕</a>
+        </div>
+        <p class="texto-ayuda">ID interno: FIG-009 · No editable · * Obligatorios</p>
+        <form class="formulario" action="#" method="post">
+          <div class="rejilla-formulario">
+            <div class="campo">
+              <label class="etiqueta" for="codigo-editar-nuevo">Código de barras único *</label>
+              <input class="entrada" type="text" id="codigo-editar-nuevo" name="codigo_barras" value="7501234567909" placeholder="Escanea o escribe el código" required>
+              <p class="texto-error oculto">Código de barras obligatorio o ya registrado.</p>
+            </div>
+            <div class="campo">
+              <label class="etiqueta" for="nombre-editar-nuevo">Nombre del producto *</label>
+              <input class="entrada" type="text" id="nombre-editar-nuevo" name="nombre" value="Sakura · edición verano" placeholder="Nombre comercial" required>
+            </div>
+            <div class="campo campo-ancho">
+              <label class="etiqueta" for="descripcion-editar-nuevo">Descripción *</label>
+              <input class="entrada" type="text" id="descripcion-editar-nuevo" name="descripcion" value="Figura estática de colección, edición verano." placeholder="Características y detalles de la figura" required>
+            </div>
+          </div>
+          <div class="rejilla-formulario-tres">
+            <div class="campo">
+              <label class="etiqueta" for="precio-editar-nuevo">Precio de venta *</label>
+              <input class="entrada" type="text" id="precio-editar-nuevo" name="precio" value="$ 850.00" placeholder="$ 0.00" required>
+              <p class="texto-error oculto">El precio debe ser mayor que 0.</p>
+            </div>
+            <div class="campo">
+              <label class="etiqueta" for="categoria-editar-nuevo">Categoría</label>
+              <select class="selector" id="categoria-editar-nuevo" name="categoria"><option>Figuras estáticas</option><option>Figuras articuladas</option><option>Figuras chibi</option><option>Figuras escala</option><option>Armables</option><option>Devoluciones</option><option>Artículos dañados</option></select>
+            </div>
+            <div class="campo">
+              <label class="etiqueta" for="estado-editar-nuevo">Estado *</label>
+              <select class="selector" id="estado-editar-nuevo" name="estado"><option>Activo</option><option>Inactivo</option></select>
+            </div>
+          </div>
+          <div class="caja-archivo">
+            <div>
+              <strong>Imagen del producto *</strong>
+              <p class="texto-ayuda">sakura-verano.png · Imagen seleccionada</p>
+              <p class="texto-error oculto">Falta la imagen obligatoria.</p>
+            </div>
+            <label class="boton-secundario" for="imagen-editar-nuevo">Cambiar</label>
+            <input class="oculto" type="file" id="imagen-editar-nuevo" name="imagen" accept=".jpg,.jpeg,.png">
+          </div>
+          <p class="texto-ayuda">Las existencias se registran al confirmar una compra.</p>
+          <div class="modal-acciones">
+            <a class="boton-secundario" href="#cerrar">Cancelar</a>
+            <a class="boton" href="#cerrar">Guardar cambios</a><!-- BACKEND: submit real -->
+          </div>
+          <p class="texto-ayuda">El código de barras debe ser único. La imagen es obligatoria.</p>
+        </form>
+      </div>
+    </section>
+
+    <!-- Cambios guardados · modal-cambios-guardados -->
+    <section class="modal oculto" id="modal-cambios-guardados" aria-label="Cambios guardados">
+      <div class="modal-contenido modal-ancho">
+        <div class="modal-cabecera">
+          <div><h2 class="modal-titulo">Cambios guardados</h2><p class="texto-ayuda">Información del catálogo · Datos de ejemplo</p></div>
+          <a class="modal-cerrar" href="#cerrar" aria-label="Cerrar">✕</a>
+        </div>
+        <div class="modal-detalle">
+          <!-- IMG: foto grande del producto (assets/img/sakura-primavera.jpg) -->
+          <img class="modal-imagen" src="../assets/img/sakura-primavera.jpg" alt="Sakura · edición primavera">
+          <div class="modal-datos">
+            <h3 class="seccion-titulo">Sakura · edición primavera</h3>
+            <p><strong>ID interno: FIG-001 · No editable</strong></p>
+            <p>Código de barras único<br>7501234567893</p>
+            <p>Estado: Activo &nbsp; Existencias: 12</p>
+            <p class="producto-precio">Precio de venta: $ 850.00</p>
+          </div>
+        </div>
+        <p><strong>Figuras estáticas</strong></p>
+        <p>Figura estática de colección. Incluye empaque original.</p>
+        <div class="alerta alerta-informacion">Los datos fueron actualizados. El ID interno y las existencias no cambiaron.</div>
+        <div class="modal-acciones">
+          <a class="boton-secundario" href="#cerrar">Volver al inventario</a>
+          <a class="boton-secundario" href="#modal-desactivar" data-rol="admin">Desactivar</a>
+          <a class="boton" href="#modal-editar" data-rol="admin">Editar producto</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- PIE DE PÁGINA (idéntico en todas las páginas) -->
+  <footer class="pie-pagina">
+    <div class="contenedor">
+      <p class="logo">KamiKōbō</p>
+      <p>Panel de administración</p>
+      <p>Catálogo · Compras · Ventas · Devoluciones</p>
+      <div class="pie-sesion">
+        <span>Sesión: Ana López / Administrador</span>
+        <span>Sistema de gestión comercial</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js" defer></script>
+  <script src="../js/inventario/inventario.js" defer></script>
+  <script src="../js/inventario/inventarioSQL.js" defer></script>
+</body>
+</html>

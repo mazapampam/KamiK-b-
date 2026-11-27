@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Inicio · KamiKōbō</title>
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/componentes.css">
+  <link rel="stylesheet" href="../css/interacciones.css">
+  <link rel="stylesheet" href="../css/paginas/dashboard.css">
+</head>
+<!-- Cambiar a data-rol="operador" para probar el rol Operador -->
+<body data-rol="admin">
+
+  <!-- ENCABEZADO (idéntico en todas las páginas; luego puede extraerse a un componente) -->
+  <header class="encabezado">
+    <div class="contenedor">
+      <a class="boton-menu" href="#menu" aria-label="Abrir menú">☰</a>
+      <a class="logo" href="dashboard.html">KamiKōbō</a>
+      <input class="buscador" type="search" placeholder="Buscar en el sistema…" aria-label="Buscar en el sistema">
+      <div class="zona-usuario">
+        <a class="icono-usuario" href="#menu-usuario" aria-label="Menú de usuario">👤</a>
+        <nav class="menu-usuario oculto" id="menu-usuario">
+          <a href="perfil.html">Ver perfil</a>
+          <a class="enlace-peligro" href="login.html">Cerrar sesión</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- MENÚ LATERAL (se abre con :target; cierra con href="#cerrar") -->
+  <div class="fondo-oscuro oculto" id="menu">
+    <nav class="menu-lateral">
+      <div class="menu-cabecera"><strong>NAVEGACIÓN</strong><a class="modal-cerrar" href="#cerrar" aria-label="Cerrar menú">✕</a></div>
+      <a href="ventas.html">Punto de venta</a>
+      <a href="inventario.html">Inventario</a>
+      <a href="compras.html" data-rol="admin">Compras</a>
+      <a href="devoluciones.html">Devoluciones</a>
+      <a href="historial.html" data-rol="admin">Historial y Consultas</a>
+      <a href="reportes.html" data-rol="admin">Reportes</a>
+      <a href="usuarios.html" data-rol="admin">Usuarios y Roles</a>
+      <a href="cierre-caja.html" data-rol="admin">Cierre de caja</a>
+      <hr class="menu-separador">
+      <p class="texto-ayuda">Panel de administración</p>
+    </nav>
+  </div>
+
+  <main class="contenedor contenido">
+    <p class="ruta-navegacion">KamiKōbō / INICIO</p>
+    <h1 class="titulo-pagina">Inicio</h1>
+    <p class="subtitulo-pagina">Selecciona un módulo para comenzar.</p>
+
+    <!-- IMG: cada tarjeta lleva una imagen difuminada a la derecha (assets/img/modulo-*.jpg) -->
+    <section class="rejilla-tarjetas">
+      <article class="tarjeta tarjeta-modulo">
+        <span class="tarjeta-numero">01</span>
+        <img class="tarjeta-icono" src="../assets/icons/venta.svg" alt="">
+        <img class="tarjeta-fondo" src="../assets/img/modulo-ventas.jpg" alt="">
+        <h2 class="tarjeta-titulo">Punto de venta</h2>
+        <p class="texto-ayuda">Registra ventas y gestiona el cobro.</p>
+        <a class="boton-enlace" href="ventas.html">Abrir punto de venta ↘</a>
+      </article>
+      <article class="tarjeta tarjeta-modulo">
+        <span class="tarjeta-numero">02</span>
+        <img class="tarjeta-icono" src="../assets/icons/inventario.svg" alt="">
+        <img class="tarjeta-fondo" src="../assets/img/modulo-inventario.jpg" alt="">
+        <h2 class="tarjeta-titulo">Inventario</h2>
+        <p class="texto-ayuda">Consulta y administra tu catálogo.</p>
+        <a class="boton-enlace" href="inventario.html">Ver inventario ↘</a>
+      </article>
+      <article class="tarjeta tarjeta-modulo" data-rol="admin">
+        <span class="tarjeta-numero">03</span>
+        <img class="tarjeta-icono" src="../assets/icons/compras.svg" alt="">
+        <img class="tarjeta-fondo" src="../assets/img/modulo-compras.jpg" alt="">
+        <h2 class="tarjeta-titulo">Compras</h2>
+        <p class="texto-ayuda">Registra entradas de mercancía.</p>
+        <a class="boton-enlace" href="compras.html">Registrar compra ↘</a>
+      </article>
+      <article class="tarjeta tarjeta-modulo">
+        <span class="tarjeta-numero">04</span>
+        <img class="tarjeta-icono" src="../assets/icons/devoluciones.svg" alt="">
+        <img class="tarjeta-fondo" src="../assets/img/modulo-devoluciones.jpg" alt="">
+        <h2 class="tarjeta-titulo">Devoluciones</h2>
+        <p class="texto-ayuda">Consulta ventas y registra devoluciones.</p>
+        <a class="boton-enlace" href="devoluciones.html">Gestionar devoluciones ↘</a>
+      </article>
+    </section>
+
+    <section class="tarjeta tarjeta-rosa tarjeta-ancha" data-rol="admin">
+      <img class="tarjeta-icono" src="../assets/icons/historial.svg" alt="">
+      <img class="tarjeta-fondo" src="../assets/img/modulo-historial.jpg" alt="">
+        <h2 class="tarjeta-titulo">Historial y consultas</h2>
+      <p class="texto-ayuda">Revisa los movimientos de tu negocio.</p>
+      <a class="boton-enlace" href="historial.html">Consultar historial ↘</a>
+    </section>
+
+    <section class="grupo-botones" data-rol="admin">
+      <a class="boton-secundario" href="reportes.html">Reportes</a>
+      <a class="boton-secundario" href="cierre-caja.html">Cierre de caja</a>
+      <a class="boton-secundario" href="usuarios.html">Usuarios y roles</a>
+    </section>
+  </main>
+
+  <!-- PIE DE PÁGINA (idéntico en todas las páginas) -->
+  <footer class="pie-pagina">
+    <div class="contenedor">
+      <p class="logo">KamiKōbō</p>
+      <p>Panel de administración</p>
+      <p>Catálogo · Compras · Ventas · Devoluciones</p>
+      <div class="pie-sesion">
+        <span>Sesión: Ana López / Administrador</span>
+        <span>Sistema de gestión comercial</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js" defer></script>
+</body>
+</html>
